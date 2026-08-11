@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChiroPro — Bundle C · §4 Lock Preview</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* =============================================================================
+ * ChiroPro — Bundle C (Warm Slate Calm) §4 Lock Preview
+ * Every value below comes from verticals/chiropro.md §4 bundles.C.
+ * ============================================================================= */
+:root {
+  /* Palette — bundle C */
+  --cpro-primary:        #52708C;
+  --cpro-primary-deep:   #24384B;
+  --cpro-primary-soft:   #DCE5EE;
+  --cpro-accent:         #C2A878;
+  --cpro-accent-soft:    #ECDCCD;
+  --cpro-bg:             #FCF4E9;
+  --cpro-bg-2:           #FFFFFF;
+  --cpro-ink:            #282725;
+  --cpro-ink-soft:       #6E6A64;
+  --cpro-line:           #E6DDD1;
+  --cpro-signature:      #D6DEBA;
+
+  /* Typography — bundle C */
+  --cpro-font-display:   'Lexend', Georgia, serif;
+  --cpro-font-body:      'Inter', system-ui, sans-serif;
+  --cpro-font-mono:      'JetBrains Mono', ui-monospace, monospace;
+
+  /* Surface radii — bundle C (from SURFACE-PATTERNS.md §1) */
+  --cpro-radius-sm:      8px;
+  --cpro-radius-md:      12px;
+  --cpro-radius-lg:      16px;
+
+  /* Cross-vertical comparison */
+  --nfh-primary:       #1A2540;
+  --nfh-accent:        #C8A24F;
+  --nfh-signature:     #C8A24F;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--cpro-font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--cpro-ink);
+  background: var(--cpro-bg);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--cpro-primary); text-decoration: underline; text-decoration-color: var(--cpro-accent); text-underline-offset: 4px; }
+
+/* ===== Spec annotation chrome (mono) ===== */
+.spec-label {
+  font-family: var(--cpro-font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cpro-accent);
+}
+.spec-meta {
+  font-family: var(--cpro-font-mono);
+  font-size: 11px;
+  color: var(--cpro-ink-soft);
+  letter-spacing: 0.06em;
+}
+
+/* ===== Page chrome ===== */
+.page { max-width: 1280px; margin: 0 auto; padding: 80px 32px 120px; }
+
+/* ===== Bundle banner ===== */
+.bundle-banner {
+  background: var(--cpro-ink);
+  color: var(--cpro-bg);
+  padding: 20px 32px;
+  margin: -80px -32px 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.bundle-banner-id {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+.bundle-id-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--cpro-accent);
+  color: var(--cpro-ink);
+  font-family: var(--cpro-font-mono);
+  font-size: 18px;
+  font-weight: 800;
+  border-radius: 9999px;
+  letter-spacing: 0;
+}
+.bundle-banner-name {
+  font-family: var(--cpro-font-display);
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0;
+  font-variation-settings: "opsz" 24;
+}
+.bundle-banner-vibe {
+  font-family: var(--cpro-font-body);
+  font-size: 13px;
+  color: var(--cpro-bg-2);
+  margin: 2px 0 0;
+  letter-spacing: 0.04em;
+}
+.bundle-banner-siblings {
+  display: flex;
+  gap: 12px;
+  font-family: var(--cpro-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.bundle-banner-siblings a {
+  color: var(--cpro-bg-2);
+  text-decoration: underline;
+  text-decoration-color: var(--cpro-accent);
+  text-underline-offset: 4px;
+}
+.bundle-banner-siblings a:hover { color: var(--cpro-accent); }
+
+.doc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--cpro-line);
+  padding-bottom: 32px;
+  margin-bottom: 64px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.doc-header h1 {
+  font-family: var(--cpro-font-mono);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--cpro-primary-deep);
+  margin: 0 0 8px;
+}
+.doc-header p { margin: 0; color: var(--cpro-ink-soft); font-size: 14px; }
+
+/* ===== Section chrome ===== */
+.sec { margin-bottom: 96px; }
+.sec-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 32px; flex-wrap: wrap; }
+.sec-head .num {
+  font-family: var(--cpro-font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--cpro-accent);
+}
+.sec-head h2 {
+  font-family: var(--cpro-font-display);
+  font-size: 36px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: var(--cpro-ink);
+  font-variation-settings: "opsz" 48;
+}
+
+/* ===== §1 Hero preview ===== */
+.hero {
+  background: var(--cpro-bg-2);
+  border: 1px solid var(--cpro-line);
+  border-radius: var(--cpro-radius-md);
+  padding: 80px 64px;
+  position: relative;
+}
+.hero-eyebrow {
+  font-family: var(--cpro-font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--cpro-accent);
+  margin: 0 0 28px;
+}
+.hero h1 {
+  font-family: var(--cpro-font-display);
+  font-size: 76px;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+  margin: 0 0 24px;
+  color: var(--cpro-ink);
+  font-variation-settings: "opsz" 120;
+  max-width: 16ch;
+}
+.hero h1 .accent {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--cpro-accent);
+}
+.hero-sub {
+  font-family: var(--cpro-font-body);
+  font-size: 19px;
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--cpro-ink-soft);
+  max-width: 50ch;
+  margin: 0 0 40px;
+}
+
+/* ===== Bundle button (used in hero + §6 surface samples) ===== */
+/* The primary button style for THIS bundle — paste from SURFACE-PATTERNS.md §3 */
+.bundle-btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; border: 0; cursor: pointer; text-decoration: none; font: 600 15px/1 var(--cpro-font-body); border-radius: 9999px; }
+.bundle-btn-primary { background: var(--cpro-primary); color: #FFFFFF; }
+/* The secondary button style — paste from SURFACE-PATTERNS.md §3 (or §3.20 underline) */
+.bundle-btn-secondary { background: transparent; color: var(--cpro-ink); border: 1.5px solid var(--cpro-ink); padding: 12.5px 26.5px; border-radius: 9999px; }
+/* Button hover behavior — paste from MOTION-PATTERNS.md §1 */
+.bundle-btn { transition: transform 160ms cubic-bezier(.4,0,.2,1), background-color 160ms ease, border-color 160ms ease; }
+.bundle-btn:hover { transform: scale(1.04); }
+.bundle-btn-primary:hover { background: color-mix(in srgb, var(--cpro-primary) 88%, black); }
+.bundle-btn-secondary:hover { border-color: var(--cpro-primary); color: var(--cpro-primary); }
+.bundle-btn:active { transform: scale(.98); transition-duration: 80ms; }
+.bundle-btn:focus-visible { outline: 0; box-shadow: 0 0 0 3px color-mix(in srgb, var(--cpro-primary) 24%, transparent); }
+
+/* ===== Bundle card chrome (used in voice cards + §6 + §8 trust + §9 distinctness) ===== */
+/* Card chrome — paste from SURFACE-PATTERNS.md §2 */
+.bundle-card { background: var(--cpro-bg-2); border: 0; border-radius: var(--cpro-radius-lg); box-shadow: 0 10px 25px -5px rgba(40,39,37,.10), 0 8px 10px -6px rgba(40,39,37,.05); padding: 30px; }
+/* Card hover — paste from MOTION-PATTERNS.md §2 */
+.bundle-card { transition: transform 220ms cubic-bezier(.65,0,.35,1), box-shadow 220ms ease; }
+.bundle-card:hover { transform: translateY(-4px); box-shadow: 0 18px 38px -8px rgba(40,39,37,.16), 0 10px 14px -8px rgba(40,39,37,.07); }
+
+/* ===== Bundle link hover (used in all body links) ===== */
+.bundle-link { color: var(--cpro-ink); text-decoration: none; background-image: linear-gradient(transparent 62%, color-mix(in srgb, var(--cpro-accent) 45%, transparent) 62%); background-size: 0% 100%; background-repeat: no-repeat; background-position: 0% 0%; transition: background-size 320ms cubic-bezier(.65,0,.35,1); }
+.bundle-link:hover { background-size: 100% 100%; }
+
+/* ===== Bundle section divider style ===== */
+.bundle-divider { height: 0; border: 0; margin: 40px 0; }
+
+/* ===== Bundle image treatment (used in §6 sample) ===== */
+.bundle-img { width: 100%; object-fit: cover; border-radius: var(--cpro-radius-md); background: var(--cpro-bg); }
+.bundle-img.is-portrait, .bundle-img[data-shape="circle"] { border-radius: 9999px; aspect-ratio: 1 / 1; }
+
+/* ===== Bundle form field style (used in §6 sample) ===== */
+.bundle-input { width: 100%; padding: 20px 16px 8px; background: var(--cpro-bg-2); color: var(--cpro-ink); border: 1px solid var(--cpro-line); border-radius: var(--cpro-radius-sm); font: 400 15px/1.4 var(--cpro-font-body); transition: border-color 200ms ease, box-shadow 200ms ease; }
+.bundle-input::placeholder { color: var(--cpro-ink-soft); opacity: .7; }
+.bundle-input:focus-visible { outline: 0; border-color: var(--cpro-primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--cpro-primary) 20%, transparent); }
+
+/* ===== §2 Palette swatches ===== */
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.swatch {
+  background: var(--cpro-bg-2);
+  border: 1px solid var(--cpro-line);
+  border-radius: var(--cpro-radius-sm);
+  overflow: hidden;
+}
+.swatch-chip { height: 110px; border-bottom: 1px solid var(--cpro-line); }
+.swatch-meta { padding: 14px 16px 16px; }
+.swatch-name {
+  font-family: var(--cpro-font-display);
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  color: var(--cpro-ink);
+  font-variation-settings: "opsz" 24;
+}
+.swatch-hex {
+  font-family: var(--cpro-font-mono);
+  font-size: 11px;
+  color: var(--cpro-ink-soft);
+  margin: 0 0 6px;
+  letter-spacing: 0.08em;
+}
+.swatch-use {
+  font-family: var(--cpro-font-body);
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--cpro-ink-soft);
+  margin: 0;
+}
+
+/* ===== §3 Typography specimen ===== */
+.type-spec {
+  background: var(--cpro-bg-2);
+  border: 1px solid var(--cpro-line);
+  border-radius: var(--cpro-radius-md);
+  padding: 56px 48px;
+}
+.type-spec-row { padding: 24px 0; border-bottom: 1px solid var(--cpro-line); }
+.type-spec-row:last-child { border-bottom: 0; }
+.type-spec-row .annotation {
+  font-family: var(--cpro-font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cpro-accent);
+  display: block;
+  margin-bottom: 12px;
+}
+.display-w700 { font-family: var(--cpro-font-display); font-weight: 700; font-size: 64px; line-height: 1.02; letter-spacing: -0.035em; color: var(--cpro-ink); font-variation-settings: "opsz" 120; margin: 0; }
+.display-w600 { font-family: var(--cpro-font-display); font-weight: 600; font-size: 44px; line-height: 1.1; letter-spacing: -0.02em; color: var(--cpro-ink); font-variation-settings: "opsz" 64; margin: 0; }
+.display-w500 { font-family: var(--cpro-font-display); font-weight: 500; font-size: 28px; line-height: 1.2; letter-spacing: -0.01em; color: var(--cpro-ink); font-variation-settings: "opsz" 32; margin: 0; }
+.display-italic { font-family: var(--cpro-font-display); font-weight: 500; font-style: italic; font-size: 32px; color: var(--cpro-accent); font-variation-settings: "opsz" 48; margin: 0; }
+.body-w700 { font-family: var(--cpro-font-body); font-weight: 700; font-size: 18px; color: var(--cpro-ink); margin: 0; }
+.body-w500 { font-family: var(--cpro-font-body); font-weight: 500; font-size: 17px; line-height: 1.6; color: var(--cpro-ink); margin: 0; max-width: 64ch; }
+.body-w400 { font-family: var(--cpro-font-body); font-weight: 400; font-size: 17px; line-height: 1.6; color: var(--cpro-ink-soft); margin: 0; max-width: 64ch; }
+
+/* ===== §4 Voice cards (uses bundle card chrome) ===== */
+.voice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.voice-card {
+  padding: 32px 36px;
+  border-top: 4px solid var(--cpro-accent);
+}
+.voice-card.never { border-top-color: var(--cpro-primary); }
+.voice-card h3 {
+  font-family: var(--cpro-font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin: 0 0 24px;
+  color: var(--cpro-accent);
+}
+.voice-card.never h3 { color: var(--cpro-primary); }
+.voice-card ul { list-style: none; padding: 0; margin: 0; }
+.voice-card li {
+  font-family: var(--cpro-font-display);
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.4;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--cpro-line);
+  color: var(--cpro-ink);
+  font-variation-settings: "opsz" 32;
+}
+.voice-card li:last-child { border-bottom: 0; }
+.voice-card.never li { color: var(--cpro-ink-soft); text-decoration: line-through; text-decoration-color: rgba(0,0,0,0.3); }
+
+/* ===== §5 Section flow ===== */
+.flow { display: flex; flex-direction: column; gap: 6px; }
+.flow-step {
+  background: var(--cpro-bg-2);
+  border: 1px solid var(--cpro-line);
+  border-radius: var(--cpro-radius-sm);
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  border-left: 4px solid var(--cpro-line);
+}
+.flow-step.universal { border-left-color: var(--cpro-ink-soft); }
+.flow-step.hero-row { border-left-color: var(--cpro-primary); }
+.flow-step.middle { border-left-color: var(--cpro-accent); }
+.flow-step.conv { border-left-color: var(--cpro-signature); background: linear-gradient(90deg, rgba(0,0,0,0.04), var(--cpro-bg-2) 60%); }
+.flow-step .id {
+  font-family: var(--cpro-font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--cpro-primary-deep);
+  min-width: 30px;
+  text-align: right;
+}
+.flow-step .label {
+  font-family: var(--cpro-font-display);
+  font-weight: 600;
+  font-size: 19px;
+  color: var(--cpro-ink);
+  flex: 1;
+  font-variation-settings: "opsz" 32;
+}
+.flow-step .label .tag {
+  font-family: var(--cpro-font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cpro-ink-soft);
+  margin-left: 12px;
+}
+.flow-step .desc {
+  font-family: var(--cpro-font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--cpro-ink-soft);
+  flex: 2;
+}
+
+/* ===== §6 Surface samples ===== */
+.surface-samples {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+.surface-block {
+  background: var(--cpro-bg-2);
+  border: 1px solid var(--cpro-line);
+  border-radius: var(--cpro-radius-md);
+  padding: 36px 40px;
+}
+.surface-block-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px solid var(--cpro-line);
+  padding-bottom: 16px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.surface-block-title {
+  font-family: var(--cpro-font-display);
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--cpro-ink);
+  font-variation-settings: "opsz" 24;
+}
+.surface-block-name {
+  font-family: var(--cpro-font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cpro-accent);
+}
+.surface-block-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+}
+.radius-sample {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.radius-box {
+  width: 80px;
+  height: 80px;
+  background: var(--cpro-primary);
+}
+.radius-box.sm { border-radius: var(--cpro-radius-sm); }
+.radius-box.md { border-radius: var(--cpro-radius-md); }
+.radius-box.lg { border-radius: var(--cpro-radius-lg); }
+.radius-label {
+  font-family: var(--cpro-font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cpro-ink-soft);
+}
+
+/* Sample card shape used in §6 (uses bundle card chrome via cascade) */
+.sample-card-wrap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%; }
+.sample-card-content { padding: 12px; }
+.sample-card-content h4 {
+  font-family: var(--cpro-font-display);
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 8px;
+  color: var(--cpro-ink);
+  font-variation-settings: "opsz" 24;
+}
+.sample-card-content p {
+  font-family: var(--cpro-font-body);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--cpro-ink-soft);
+  margin: 0;
+}
+
+.sample-img-wrap { display: flex; gap: 16px; flex-wrap: wrap; }
+.sample-img-placeholder {
+  width: 220px;
+  background: linear-gradient(135deg, var(--cpro-primary-soft) 0%, var(--cpro-accent-soft) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cpro-primary-deep);
+  font-family: var(--cpro-font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.sample-form { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 420px; }
+.sample-form label {
+  font-family: var(--cpro-font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cpro-ink-soft);
+}
+
+/* ===== §7 Motion samples (live hoverable demos) ===== */
+.motion-block {
+  background: var(--cpro-bg-2);
+  border: 1px solid var(--cpro-line);
+  border-radius: var(--cpro-radius-md);
+  padding: 36px 40px;
+  margin-bottom: 24px;
+}
+.motion-demo-stage {
+  background: var(--cpro-bg);
+  border: 1px dashed var(--cpro-line);
+  padding: 56px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 24px;
+  min-height: 140px;
+}
+.motion-hover-hint {
+  position: absolute;
+  font-family: var(--cpro-font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cpro-ink-soft);
+  margin-top: 100px;
+}
+.motion-spec-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.motion-spec-table th,
+.motion-spec-table td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--cpro-line);
+  font-family: var(--cpro-font-body);
+  font-size: 14px;
+}
+.motion-spec-table th {
+  font-family: var(--cpro-font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cpro-accent);
+  width: 30%;
+}
+.motion-spec-table td { color: var(--cpro-ink); }
+.motion-spec-table td .pat-name {
+  font-family: var(--cpro-font-display);
+  font-weight: 600;
+  color: var(--cpro-ink);
+}
+
+/* ===== §8 Trust strip ===== */
+.trust-strip {
+  background: var(--cpro-bg-2);
+  border: 1px solid var(--cpro-line);
+  border-radius: var(--cpro-radius-md);
+  padding: 40px 48px;
+}
+.trust-logos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--cpro-line);
+}
+.trust-logo {
+  font-family: var(--cpro-font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--cpro-ink-soft);
+  letter-spacing: -0.01em;
+  opacity: 0.75;
+  font-variation-settings: "opsz" 32;
+}
+.pull-quote {
+  font-family: var(--cpro-font-display);
+  font-size: 26px;
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--cpro-ink);
+  margin: 0 0 16px;
+  font-variation-settings: "opsz" 32;
+  max-width: 60ch;
+}
+.pull-quote-attr {
+  font-family: var(--cpro-font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cpro-accent);
+  margin: 0;
+}
+
+/* ===== §9 Cross-vertical distinctness ===== */
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.compare-card {
+  padding: 32px 36px;
+  border: 1px solid var(--cpro-line);
+  border-radius: var(--cpro-radius-md);
+}
+.compare-card.this { background: var(--cpro-bg-2); border-left: 4px solid var(--cpro-primary); }
+.compare-card.other { background: var(--cpro-bg-2); border-left: 4px solid var(--nfh-primary); }
+.compare-card .label {
+  font-family: var(--cpro-font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+}
+.compare-card.this .label { color: var(--cpro-primary); }
+.compare-card.other .label { color: var(--nfh-primary); }
+.compare-card .name {
+  font-family: var(--cpro-font-display);
+  font-size: 26px;
+  font-weight: 600;
+  margin: 0 0 20px;
+  color: var(--cpro-ink);
+  font-variation-settings: "opsz" 32;
+}
+.compare-row { display: flex; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--cpro-line); align-items: center; }
+.compare-row:last-child { border-bottom: 0; }
+.compare-row .row-label {
+  font-family: var(--cpro-font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cpro-ink-soft);
+  min-width: 90px;
+}
+.compare-row .row-value { font-size: 14px; color: var(--cpro-ink); }
+.dot { display: inline-block; width: 14px; height: 14px; border-radius: 50%; vertical-align: middle; margin-right: 6px; }
+
+/* ===== Footer ===== */
+.foot-note {
+  margin-top: 96px;
+  padding-top: 32px;
+  border-top: 1px solid var(--cpro-line);
+  font-family: var(--cpro-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--cpro-ink-soft);
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 960px) {
+  .hero { padding: 56px 32px; }
+  .hero h1 { font-size: 56px; }
+  .palette-grid { grid-template-columns: repeat(2, 1fr); }
+  .voice-grid, .compare { grid-template-columns: 1fr; }
+  .sample-card-wrap { grid-template-columns: 1fr; }
+  .flow-step { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .flow-step .id { min-width: auto; }
+  .type-spec { padding: 32px 28px; }
+  .display-w700 { font-size: 44px; }
+  .bundle-banner { flex-direction: column; align-items: flex-start; gap: 16px; }
+}
+
+/* ===== §10 Section visual rhythm full-flow preview ===== */
+/* Each .rhythm-band represents one section in shared.section_list with its declared section_rhythm (bg / imagery / chrome). */
+/* H9 verify-section-visual-rhythm enforces rhythm thresholds — preview reveals drift BEFORE James picks a bundle. */
+.rhythm-stack {
+  display: flex; flex-direction: column;
+  gap: 6px;
+  border-radius: var(--cpro-radius-md);
+  overflow: hidden;
+  border: 1px solid var(--cpro-line);
+}
+.rhythm-band {
+  display: grid;
+  grid-template-columns: 56px 1fr 240px;
+  gap: 24px;
+  align-items: center;
+  padding: 20px 28px;
+  min-height: 80px;
+  position: relative;
+}
+.rhythm-band[data-bg="dark"] { background: var(--cpro-primary-deep); color: var(--cpro-bg-2); }
+.rhythm-band[data-bg="light"] { background: var(--cpro-bg-2); color: var(--cpro-ink); }
+.rhythm-band[data-bg="warm"] { background: var(--cpro-bg); color: var(--cpro-ink); }
+.rhythm-band[data-bg="accent"] { background: var(--cpro-accent-soft); color: var(--cpro-ink); }
+.rhythm-band[data-bg="gradient"] { background: linear-gradient(135deg, var(--cpro-accent-soft), var(--cpro-bg)); color: var(--cpro-ink); }
+.rhythm-band[data-bg=""], .rhythm-band[data-bg="unknown"] { display: none; }
+.rhythm-band-num {
+  font-family: var(--cpro-font-mono);
+  font-size: 18px; font-weight: 700;
+  opacity: 0.55; letter-spacing: 0.05em;
+}
+.rhythm-band-content { min-width: 0; }
+.rhythm-band-label {
+  font-family: var(--cpro-font-display);
+  font-size: 20px; font-weight: 500;
+  margin: 0; line-height: 1.2;
+}
+.rhythm-band-meta {
+  font-family: var(--cpro-font-mono);
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  opacity: 0.65; margin: 6px 0 0;
+}
+.rhythm-band-meta code {
+  font-family: var(--cpro-font-mono);
+  font-size: 10px;
+  padding: 1px 5px;
+  background: rgba(127,127,127,0.15);
+  border-radius: 3px;
+  margin: 0 2px;
+}
+.rhythm-band-card {
+  height: 56px;
+  border-radius: var(--cpro-radius-sm);
+  background: transparent;
+}
+.rhythm-band[data-chrome="hairline-card"] .rhythm-band-card { border: 1px solid currentColor; opacity: 0.4; }
+.rhythm-band[data-chrome="shadow-lift"] .rhythm-band-card { background: var(--cpro-bg-2); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
+.rhythm-band[data-chrome="image-overlay"] .rhythm-band-card { background: linear-gradient(135deg, var(--cpro-primary), var(--cpro-accent)); }
+.rhythm-band[data-chrome="dark-anchor-panel"] .rhythm-band-card { background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.22); }
+.rhythm-band[data-chrome="open-layout"] .rhythm-band-card { background: transparent; border: 1px dashed currentColor; opacity: 0.25; }
+.rhythm-band-tag {
+  position: absolute; top: 8px; right: 12px;
+  font-family: var(--cpro-font-mono);
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  background: rgba(127,127,127,0.18);
+}
+.rhythm-band[data-imagery="full-bleed-photo"] .rhythm-band-tag::before { content: "PHOTO"; }
+.rhythm-band[data-imagery="inset-photo"] .rhythm-band-tag::before { content: "INSET PHOTO"; }
+.rhythm-band[data-imagery="decorative-illustration"] .rhythm-band-tag::before { content: "MOTIF"; }
+.rhythm-band[data-imagery="none-with-justification"] .rhythm-band-tag::before { content: "NO IMAGERY"; opacity: 0.7; }
+.rhythm-band[data-imagery=""] .rhythm-band-tag { display: none; }
+
+</style>
+</head>
+<body>
+<main class="page">
+
+  <!-- Bundle banner — varies per A / B / C -->
+  <div class="bundle-banner">
+    <div class="bundle-banner-id">
+      <span class="bundle-id-chip">C</span>
+      <div>
+        <h2 class="bundle-banner-name">Warm Slate Calm</h2>
+        <p class="bundle-banner-vibe">human first, warm cream over clinical white, built for the anxious first-timer</p>
+      </div>
+    </div>
+    <!-- The sibling links that sat here pointed at lock-preview-a.html and
+         lock-preview-b.html. Those files are deleted by the post-pick handoff
+         (step 2), so the links were dead the moment Bundle C was locked. They
+         existed only to let the three candidates be compared BEFORE the pick;
+         after it there are no siblings, so this records the outcome instead. -->
+    <div class="bundle-banner-siblings">
+      <span>Picked 2026-08-07 &middot; A Clinical Confidence and B Restorative Practice not taken</span>
+    </div>
+  </div>
+
+  <!-- Doc header -->
+  <header class="doc-header">
+    <div>
+      <h1>ChiroPro — Bundle C · §4 Lock Preview</h1>
+      <p>Visual mockup of Bundle C (Warm Slate Calm) decisions in <code>verticals/chiropro.md §4.bundles.C</code>. Compare against the other 2 bundle previews (siblings linked above), then pick one. The picked bundle becomes the build's lock.</p>
+    </div>
+    <div class="spec-meta">2026-08-07 · draft</div>
+  </header>
+
+  <!-- §1 — Hero preview -->
+  <section class="sec">
+    <div class="sec-head"><span class="num">§1</span><h2>The hero, applied.</h2></div>
+    <div class="hero">
+      <p class="hero-eyebrow">BACK · NECK · SCIATICA · HEADACHES</p>
+      <h1>Never seen a chiropractor? <span class="accent">Start here.</span></h1>
+      <p class="hero-sub">We will tell you what we are doing before we do it, show you the assessment, and give you a straight answer on how many visits it should take. Booking takes about ninety seconds.</p>
+      <a class="bundle-btn bundle-btn-primary" href="#">Book an appointment</a>
+      <a class="bundle-btn bundle-btn-secondary" href="#" style="margin-left: 12px;">Secondary action</a>
+    </div>
+  </section>
+
+  <!-- §2 — Palette (11 swatches) -->
+  <section class="sec">
+    <div class="sec-head"><span class="num">§2</span><h2>The palette, eleven tokens.</h2></div>
+    <div class="palette-grid">
+      <div class="swatch"><div class="swatch-chip" style="background: var(--cpro-primary);"></div><div class="swatch-meta"><p class="swatch-name">Primary</p><p class="swatch-hex">--cpro-primary · #52708C</p><p class="swatch-use">CTAs · primary brand surfaces</p></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background: var(--cpro-primary-deep);"></div><div class="swatch-meta"><p class="swatch-name">Primary deep</p><p class="swatch-hex">--cpro-primary-deep · #24384B</p><p class="swatch-use">Hero overlay · footer bg</p></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background: var(--cpro-primary-soft);"></div><div class="swatch-meta"><p class="swatch-name">Primary soft</p><p class="swatch-hex">--cpro-primary-soft · #DCE5EE</p><p class="swatch-use">Tinted surfaces · eyebrows</p></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background: var(--cpro-accent);"></div><div class="swatch-meta"><p class="swatch-name">Accent</p><p class="swatch-hex">--cpro-accent · #C2A878</p><p class="swatch-use">Secondary CTA · hover · decor pop</p></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background: var(--cpro-accent-soft);"></div><div class="swatch-meta"><p class="swatch-name">Accent soft</p><p class="swatch-hex">--cpro-accent-soft · #ECDCCD</p><p class="swatch-use">Tinted accent backgrounds</p></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background: var(--cpro-signature);"></div><div class="swatch-meta"><p class="swatch-name">Signature</p><p class="swatch-hex">--cpro-signature · #D6DEBA</p><p class="swatch-use">Premium signature · dividers · badges</p></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background: var(--cpro-bg); border-bottom: 1px solid var(--cpro-line);"></div><div class="swatch-meta"><p class="swatch-name">Background</p><p class="swatch-hex">--cpro-bg · #FCF4E9</p><p class="swatch-use">Default page background</p></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background: var(--cpro-bg-2); border-bottom: 1px solid var(--cpro-line);"></div><div class="swatch-meta"><p class="swatch-name">Background 2</p><p class="swatch-hex">--cpro-bg-2 · #FFFFFF</p><p class="swatch-use">Card · alternate band</p></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background: var(--cpro-ink);"></div><div class="swatch-meta"><p class="swatch-name">Ink</p><p class="swatch-hex">--cpro-ink · #282725</p><p class="swatch-use">Primary text</p></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background: var(--cpro-ink-soft);"></div><div class="swatch-meta"><p class="swatch-name">Ink soft</p><p class="swatch-hex">--cpro-ink-soft · #6E6A64</p><p class="swatch-use">Secondary text · captions</p></div></div>
+      <div class="swatch"><div class="swatch-chip" style="background: var(--cpro-line);"></div><div class="swatch-meta"><p class="swatch-name">Line</p><p class="swatch-hex">--cpro-line · #E6DDD1</p><p class="swatch-use">Dividers · hairlines</p></div></div>
+    </div>
+  </section>
+
+  <!-- §3 — Typography specimen -->
+  <section class="sec">
+    <div class="sec-head"><span class="num">§3</span><h2>Type — Lexend + Inter.</h2></div>
+    <div class="type-spec">
+      <div class="type-spec-row">
+        <span class="annotation">Lexend · 700 · 64px · opsz 120 · -0.035em · hero scale</span>
+        <p class="display-w700">Never seen a chiropractor? Start here.</p>
+      </div>
+      <div class="type-spec-row">
+        <span class="annotation">Lexend · 600 · 44px · opsz 64 · section h2</span>
+        <p class="display-w600">No long treatment plans. No unnecessary procedures.</p>
+      </div>
+      <div class="type-spec-row">
+        <span class="annotation">Lexend · 500 italic · 32px · opsz 48 · accent treatment</span>
+        <p class="display-italic">Start here.</p>
+      </div>
+      <div class="type-spec-row">
+        <span class="annotation">Lexend · 500 · 28px · opsz 32 · card h3</span>
+        <p class="display-w500">Care within days, not months</p>
+      </div>
+      <div class="type-spec-row">
+        <span class="annotation">Inter · 700 · 18px · body emphasis / button label</span>
+        <p class="body-w700">Book an appointment</p>
+      </div>
+      <div class="type-spec-row">
+        <span class="annotation">Inter · 500 · 17px · body</span>
+        <p class="body-w500">We will tell you what we are doing before we do it, show you the assessment, and give you a straight answer on how many visits it should take. Booking takes about ninety seconds.</p>
+      </div>
+      <div class="type-spec-row">
+        <span class="annotation">Inter · 400 · 17px · body soft / caption</span>
+        <p class="body-w400">Getting care shouldn&rsquo;t feel complicated</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- §4 — Voice cards (using bundle card chrome) -->
+  <section class="sec">
+    <div class="sec-head"><span class="num">§4</span><h2>Voice — sounds-like, never-sounds-like.</h2></div>
+    <div class="voice-grid">
+      <div class="bundle-card voice-card">
+        <h3>Sounds like</h3>
+        <ul>
+          <li>We fix pain fast</li>
+          <li>No long treatment plans. No unnecessary procedures.</li>
+          <li>Care within days, not months</li>
+          <li>Getting care shouldn&rsquo;t feel complicated</li>
+          <li>New patient appointment includes: focused spinal exam</li>
+        </ul>
+      </div>
+      <div class="bundle-card voice-card never">
+        <h3>Never sounds like</h3>
+        <ul>
+          <li>Unlock your body&rsquo;s innate healing potential</li>
+          <li>Realign your energy and restore balance</li>
+          <li>Subluxation-free living starts here</li>
+          <li>The miracle cure your doctor won&rsquo;t tell you about</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- §5 — Section flow -->
+  <section class="sec">
+    <div class="sec-head"><span class="num">§5</span><h2>The section flow.</h2></div>
+    <div class="flow">
+      <!-- Repeat <div class="flow-step"> for each section in shared.sections.
+           Use role class: .universal · .hero-row · .middle · .conv -->
+      <div class="flow-step universal"><span class="id">01</span><span class="label">Hero <span class="tag">SC #1</span></span><span class="desc">Two-phrase headline, dual CTA (Book / Call), 4-item trust strip.</span></div>
+      <div class="flow-step hero-row"><span class="id">02</span><span class="label">Stat strip <span class="tag">SC #3</span></span><span class="desc">4 oversized numerals — rating, patients, years, avg. visits to relief.</span></div>
+      <div class="flow-step middle"><span class="id">03</span><span class="label">Conditions we treat <span class="tag">SC #9</span></span><span class="desc">6 condition cards. The category calls it conditions, not services.</span></div>
+      <div class="flow-step middle"><span class="id">04</span><span class="label">Your first visit <span class="tag">SC #27</span></span><span class="desc">4 numbered steps over a dark panel. Pre-empts the fear objection.</span></div>
+      <div class="flow-step middle"><span class="id">05</span><span class="label">Your chiropractors <span class="tag">SC #18</span></span><span class="desc">3 practitioners, 4:5 portraits, DC credentials + technique inline.</span></div>
+      <div class="flow-step middle"><span class="id">06</span><span class="label">First visit &amp; insurance <span class="tag">SC #32</span></span><span class="desc">One price, an inclusion list, 6 accepted-carrier logos.</span></div>
+      <div class="flow-step middle"><span class="id">07</span><span class="label">Testimonials <span class="tag">SC #24</span></span><span class="desc">3 named patients, each tagged with their actual condition.</span></div>
+      <div class="flow-step middle"><span class="id">08</span><span class="label">Book your appointment <span class="tag">SC #37</span></span><span class="desc">THE conversion. Service / location / practitioner / date / time grid.</span></div>
+      <div class="flow-step middle"><span class="id">09</span><span class="label">Locations <span class="tag">SC #51</span></span><span class="desc">3 clinic cards — photo, address, per-location hours, directions.</span></div>
+      <div class="flow-step conv"><span class="id">10</span><span class="label">FAQ <span class="tag">SC #34</span></span><span class="desc">Does it hurt · is it evidence-based · how many visits · insurance.</span></div>
+      <div class="flow-step universal"><span class="id">11</span><span class="label">Closing CTA <span class="tag">SC #41</span></span><span class="desc">Full-bleed scrim, one headline, Book + Call one more time.</span></div>
+      <div class="flow-step universal"><span class="id">12</span><span class="label">Footer <span class="tag">universal</span></span><span class="desc">Per bundle: hours-and-contact (A) / pre-footer CTA band (B) / map-embedded (C).</span></div>
+    </div>
+  </section>
+
+  <!-- §6 — Surface samples -->
+  <section class="sec">
+    <div class="sec-head"><span class="num">§6</span><h2>Surface samples — Bundle C.</h2></div>
+    <div class="surface-samples">
+
+      <!-- 6.1 Corner radius scale -->
+      <div class="surface-block">
+        <div class="surface-block-head">
+          <h3 class="surface-block-title">Corner radius scale</h3>
+          <span class="surface-block-name">SURFACE #3 Modern 8-12px (2026 median)</span>
+        </div>
+        <div class="surface-block-content">
+          <div class="radius-sample">
+            <div class="radius-box sm"></div>
+            <span class="radius-label">sm · 8px</span>
+          </div>
+          <div class="radius-sample">
+            <div class="radius-box md"></div>
+            <span class="radius-label">md · 12px</span>
+          </div>
+          <div class="radius-sample">
+            <div class="radius-box lg"></div>
+            <span class="radius-label">lg · 16px</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6.2 Card chrome (live render of the bundle card style) -->
+      <div class="surface-block">
+        <div class="surface-block-head">
+          <h3 class="surface-block-title">Card chrome</h3>
+          <span class="surface-block-name">SURFACE #11 Deep-shadow-floating</span>
+        </div>
+        <div class="surface-block-content">
+          <div class="sample-card-wrap">
+            <div class="bundle-card">
+              <div class="sample-card-content">
+                <h4>No long treatment plans. No unnecessary procedures.</h4>
+                <p>Sample card body. The bundle's card chrome (paste from SURFACE-PATTERNS.md) is what makes this rectangle a card. Hover to see card-hover behavior.</p>
+              </div>
+            </div>
+            <div class="bundle-card">
+              <div class="sample-card-content">
+                <h4>Care within days, not months</h4>
+                <p>Three cards demonstrate the chrome at scale — consistency across a real grid.</p>
+              </div>
+            </div>
+            <div class="bundle-card">
+              <div class="sample-card-content">
+                <h4>Getting care shouldn&rsquo;t feel complicated</h4>
+                <p>Card chrome includes background fill, border, radius, shadow, padding.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6.3 Button styles -->
+      <div class="surface-block">
+        <div class="surface-block-head">
+          <h3 class="surface-block-title">Buttons</h3>
+          <span class="surface-block-name">SURFACE #18 Solid-pill-modern-marketing</span>
+        </div>
+        <div class="surface-block-content">
+          <a class="bundle-btn bundle-btn-primary" href="#">Book an appointment</a>
+          <a class="bundle-btn bundle-btn-secondary" href="#">Secondary action</a>
+          <a class="bundle-link" href="#">Tertiary text link</a>
+        </div>
+      </div>
+
+      <!-- 6.4 Section divider -->
+      <div class="surface-block">
+        <div class="surface-block-head">
+          <h3 class="surface-block-title">Section divider</h3>
+          <span class="surface-block-name">SURFACE #26 None / pure-spacing</span>
+        </div>
+        <div class="surface-block-content" style="flex-direction: column; align-items: stretch;">
+          <p class="body-w400" style="margin: 0;">Sample content above the divider — body copy at default register.</p>
+          <hr class="bundle-divider" />
+          <p class="body-w400" style="margin: 0;">Sample content below the divider — visualizes the bundle's section separator.</p>
+        </div>
+      </div>
+
+      <!-- 6.5 Image treatment -->
+      <div class="surface-block">
+        <div class="surface-block-head">
+          <h3 class="surface-block-title">Image treatment</h3>
+          <span class="surface-block-name">SURFACE #35 Circular-mask (portraits)</span>
+        </div>
+        <div class="surface-block-content">
+          <div class="sample-img-wrap">
+            <div class="bundle-img sample-img-placeholder" style="aspect-ratio: 16 / 10;">SAMPLE 16:10</div>
+            <div class="bundle-img sample-img-placeholder" style="aspect-ratio: 4 / 5;">SAMPLE 4:5</div>
+            <div class="bundle-img sample-img-placeholder" style="aspect-ratio: 1 / 1; width: 140px;">SQUARE</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6.6 Form field -->
+      <div class="surface-block">
+        <div class="surface-block-head">
+          <h3 class="surface-block-title">Form field</h3>
+          <span class="surface-block-name">SURFACE #41 Floating-label</span>
+        </div>
+        <div class="surface-block-content">
+          <div class="sample-form">
+            <label for="sample-email">Email</label>
+            <input type="email" id="sample-email" class="bundle-input" placeholder="you@example.com" />
+            <label for="sample-msg">Message</label>
+            <input type="text" id="sample-msg" class="bundle-input" placeholder="What can we help with?" />
+            <button class="bundle-btn bundle-btn-primary" type="button" style="margin-top: 12px;">Submit</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6.7 Decoration motifs (legacy decoration showcase if present) -->
+      <div class="surface-block">
+        <div class="surface-block-head">
+          <h3 class="surface-block-title">Decoration motifs</h3>
+          <span class="surface-block-name">shared · Five-vertebra spine glyph</span>
+        </div>
+        <div class="surface-block-content" style="flex-direction: column; align-items: stretch; gap: 16px;">
+          <div>
+            <p class="spec-label" style="margin: 0 0 8px;">Five-vertebra spine glyph</p>
+            <p class="body-w400" style="margin: 0;">Five stacked rounded forms read as a spine at logo scale and reduce to a 3-vertebra rule as the section eyebrow. The only mark on the site that is literally anatomical.</p>
+          </div>
+          <div>
+            <p class="spec-label" style="margin: 0 0 8px;">Range-of-motion arc + contour lines</p>
+            <p class="body-w400" style="margin: 0;">A thin sweeping arc sits under each section h2 in the accent colour. Hairline anatomical contour lines sit behind the first-visit process section as the decorative illustration. Nothing else is decorated.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- §7 — Motion samples -->
+  <section class="sec">
+    <div class="sec-head"><span class="num">§7</span><h2>Motion samples — Bundle C.</h2></div>
+
+    <div class="motion-block">
+      <div class="surface-block-head">
+        <h3 class="surface-block-title">Button hover (live demo · hover to test)</h3>
+        <span class="surface-block-name">MOTION #5 Scale-up (1.04 / 0.98)</span>
+      </div>
+      <div class="motion-demo-stage">
+        <a class="bundle-btn bundle-btn-primary" href="#">Book an appointment</a>
+      </div>
+    </div>
+
+    <div class="motion-block">
+      <div class="surface-block-head">
+        <h3 class="surface-block-title">Card hover (live demo · hover to test)</h3>
+        <span class="surface-block-name">MOTION #10 Lift</span>
+      </div>
+      <div class="motion-demo-stage" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+        <div class="bundle-card">
+          <div class="sample-card-content">
+            <h4>We fix pain fast</h4>
+            <p>Hover this card to see the bundle's card-hover behavior.</p>
+          </div>
+        </div>
+        <div class="bundle-card">
+          <div class="sample-card-content">
+            <h4>No long treatment plans. No unnecessary procedures.</h4>
+            <p>Hover register is paired with surface card chrome.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="motion-block">
+      <div class="surface-block-head">
+        <h3 class="surface-block-title">Link hover (live demo · hover to test)</h3>
+        <span class="surface-block-name">MOTION #19 Highlight-sweep</span>
+      </div>
+      <div class="motion-demo-stage" style="flex-direction: column; gap: 16px;">
+        <a class="bundle-link" href="#">Hover this link to see the underline / color / highlight behavior</a>
+        <a class="bundle-link" href="#">A second link to compare consistency</a>
+      </div>
+    </div>
+
+    <div class="motion-block">
+      <div class="surface-block-head">
+        <h3 class="surface-block-title">Other motion (not interactively previewable here)</h3>
+        <span class="surface-block-name">spec only</span>
+      </div>
+      <table class="motion-spec-table">
+        <tbody>
+          <tr><th>Page entrance</th><td><span class="pat-name">MOTION #24 Split-text reveal (per-word)</span></td></tr>
+          <tr><th>Scroll-triggered</th><td><span class="pat-name">MOTION #29 Stagger-grid (animation-timeline: view())</span></td></tr>
+          <tr><th>Cursor effects</th><td><span class="pat-name">MOTION #35 Inverted-cursor over image frames only</span></td></tr>
+          <tr><th>Micro-interactions</th><td><span class="pat-name">MOTION #39 Accordion open (grid-template-rows 0fr→1fr)</span></td></tr>
+          <tr><th>Page transitions</th><td><span class="pat-name">MOTION #45 Mask-wipe (clip-path + View Transitions)</span></td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top: 16px; font-size: 13px; color: var(--cpro-ink-soft);">These motion patterns affect the full built site (index.html), not this single preview. The bundle's choices are listed here for completeness and verification against MOTION-PATTERNS.md entries.</p>
+    </div>
+  </section>
+
+  <!-- §8 — Trust strip -->
+  <section class="sec">
+    <div class="sec-head"><span class="num">§8</span><h2>Trust strip.</h2></div>
+    <div class="trust-strip">
+      <div class="trust-logos">
+        <span class="trust-logo">Aetna</span>
+        <span class="trust-logo">BlueCross</span>
+        <span class="trust-logo">Cigna</span>
+        <span class="trust-logo">UnitedHealthcare</span>
+      </div>
+      <p class="pull-quote">"Six weeks of lower-back pain from sitting at a desk. Four visits. They showed me the assessment, told me what they were doing before they did it, and gave me two exercises. I have not needed a fifth."</p>
+      <p class="pull-quote-attr">— Marcus D. · lower-back pain · Riverside location</p>
+    </div>
+  </section>
+
+  <!-- §9 — Cross-vertical distinctness -->
+  <section class="sec">
+    <div class="sec-head"><span class="num">§9</span><h2>Distinctness — ChiroPro Bundle C vs Northside Family Health.</h2></div>
+    <div class="compare">
+      <div class="compare-card this">
+        <p class="label">ChiroPro · Chiropractic clinic · 3 locations · Bundle C</p>
+        <h3 class="name">Never seen a chiropractor? Start here.</h3>
+        <div class="compare-row"><span class="row-label">Primary</span><span class="row-value"><span class="dot" style="background: var(--cpro-primary);"></span>#52708C</span></div>
+        <div class="compare-row"><span class="row-label">Accent</span><span class="row-value"><span class="dot" style="background: var(--cpro-accent);"></span>#C2A878</span></div>
+        <div class="compare-row"><span class="row-label">Signature</span><span class="row-value"><span class="dot" style="background: var(--cpro-signature);"></span>#D6DEBA</span></div>
+        <div class="compare-row"><span class="row-label">Display</span><span class="row-value" style="font-family: var(--cpro-font-display);">Lexend</span></div>
+        <div class="compare-row"><span class="row-label">Body</span><span class="row-value" style="font-family: var(--cpro-font-body);">Inter</span></div>
+        <div class="compare-row"><span class="row-label">Surface</span><span class="row-value">SURFACE #11 Deep-shadow-floating</span></div>
+        <div class="compare-row"><span class="row-label">Motion</span><span class="row-value">MOTION #5 Scale-up (1.04 / 0.98)</span></div>
+        <div class="compare-row"><span class="row-label">Nav</span><span class="row-value">NAV #3 Right-aligned link cluster + phone pill</span></div>
+        <div class="compare-row"><span class="row-label">Hero</span><span class="row-value">HERO #11 Centered headline + CTA grid below</span></div>
+        <div class="compare-row"><span class="row-label">Footer</span><span class="row-value">FOOTER #13 Map-embedded local footer</span></div>
+        <div class="compare-row"><span class="row-label">Card</span><span class="row-value">CARD #13 Category image-overlay tile</span></div>
+        <div class="compare-row"><span class="row-label">CTA</span><span class="row-value">CTA #4 Phone-pill (number as button)</span></div>
+        <div class="compare-row"><span class="row-label">Divider</span><span class="row-value">DIVIDER #7 Pulled-up card overlap</span></div>
+        <div class="compare-row"><span class="row-label">Form</span><span class="row-value">FORM-LAYOUTS.md #8 Booking form with date/time/service <span style="color: var(--cpro-ink-soft); font-size: 11px;">(shared)</span></span></div>
+        <div class="compare-row"><span class="row-label">FAQ</span><span class="row-value">FAQ-ACCORDION.md #5 Centered FAQ with eyebrow + heading <span style="color: var(--cpro-ink-soft); font-size: 11px;">(shared)</span></span></div>
+        <div class="compare-row"><span class="row-label">Sticky CTA</span><span class="row-value">STICKY-CTA-BAR.md #2 Dual-button bottom-bar (Book + Call) <span style="color: var(--cpro-ink-soft); font-size: 11px;">(shared)</span></span></div>
+        <div class="compare-row"><span class="row-label">Voice</span><span class="row-value">We fix pain fast</span></div>
+      </div>
+      <div class="compare-card other">
+        <p class="label">Northside Family Health · Family primary care</p>
+        <h3 class="name">(comparison anchor)</h3>
+        <div class="compare-row"><span class="row-label">Primary</span><span class="row-value"><span class="dot" style="background: var(--nfh-primary);"></span>#1A2540</span></div>
+        <div class="compare-row"><span class="row-label">Accent</span><span class="row-value"><span class="dot" style="background: var(--nfh-accent);"></span>#C8A24F</span></div>
+        <div class="compare-row"><span class="row-label">Signature</span><span class="row-value"><span class="dot" style="background: var(--nfh-signature);"></span>#C8A24F</span></div>
+        <div class="compare-row"><span class="row-label">Display</span><span class="row-value" style="font-family: 'Public Sans', serif;">Public Sans</span></div>
+        <div class="compare-row"><span class="row-label">Body</span><span class="row-value" style="font-family: 'Public Sans', sans-serif;">Public Sans</span></div>
+        <div class="compare-row"><span class="row-label">Nav</span><span class="row-value">n/a — v4-era audit, predates the nav axis</span></div>
+        <div class="compare-row"><span class="row-label">Hero</span><span class="row-value">n/a — v4-era audit</span></div>
+        <div class="compare-row"><span class="row-label">Footer</span><span class="row-value">n/a — v4-era audit</span></div>
+        <div class="compare-row"><span class="row-label">Card</span><span class="row-value">n/a — v4-era audit</span></div>
+        <div class="compare-row"><span class="row-label">CTA</span><span class="row-value">n/a — v4-era audit</span></div>
+        <div class="compare-row"><span class="row-label">Divider</span><span class="row-value">n/a — v4-era audit</span></div>
+        <div class="compare-row"><span class="row-label">Voice</span><span class="row-value">Weve been here since the neighborhood was different.</span></div>
+      </div>
+    </div>
+    <p style="margin-top: 24px; font-size: 15px; color: var(--cpro-ink-soft); max-width: 760px;">Confirm distinctness across palette, accent, signature, display type, body type, surface chrome, motion register, voice. Any axis convergence should be intentional (independent reference convergence per playbook no-reuse rule) and documented in <code style="font-family: var(--cpro-font-mono); font-size: 13px;">verticals/chiropro.md §3</code>.</p>
+  </section>
+
+  <!-- §10 — Section visual rhythm full-flow preview (added 2026-05-21 per v6.1; surfaces section_rhythm declarations from audit shared.section_rhythm so visual drift gets caught at lock-preview time, not post-build) -->
+  <section class="sec">
+    <div class="sec-head"><span class="num">§10</span><h2>Section visual rhythm — full page flow.</h2></div>
+    <p style="margin: 0 0 32px; max-width: 760px; font-size: 15px; color: var(--cpro-ink-soft);">Each band = one section in <code style="font-family: var(--cpro-font-mono); font-size: 13px;">shared.section_list</code> with its declared <code>section_rhythm</code> (bg / imagery / chrome). Use this to verify the page won't drift to "2 dark bookends + flat-light middle" — the Coast & Crown 2026-05-21 pattern. H9 verify-section-visual-rhythm enforces: ≥2 non-light anchors, ≥1 middle-band anchor, no 4 consecutive same bg, ≥60% imagery, no 4 consecutive same chrome.</p>
+    <div class="rhythm-stack">
+      <div class="rhythm-band" data-bg="dark" data-imagery="full-bleed-photo" data-chrome="open-layout"><span class="rhythm-band-num">01</span><div class="rhythm-band-content"><p class="rhythm-band-label">Hero</p><p class="rhythm-band-meta">bg <code>dark</code> · img <code>full-bleed-photo</code> · chrome <code>open-layout</code></p></div><div class="rhythm-band-card"></div><span class="rhythm-band-tag"></span></div>
+      <div class="rhythm-band" data-bg="light" data-imagery="none-with-justification" data-chrome="open-layout"><span class="rhythm-band-num">02</span><div class="rhythm-band-content"><p class="rhythm-band-label">Stat strip</p><p class="rhythm-band-meta">bg <code>light</code> · img <code>none-with-justification</code> · chrome <code>open-layout</code></p></div><div class="rhythm-band-card"></div><span class="rhythm-band-tag"></span></div>
+      <div class="rhythm-band" data-bg="warm" data-imagery="inset-photo" data-chrome="shadow-lift"><span class="rhythm-band-num">03</span><div class="rhythm-band-content"><p class="rhythm-band-label">Conditions we treat</p><p class="rhythm-band-meta">bg <code>warm</code> · img <code>inset-photo</code> · chrome <code>shadow-lift</code></p></div><div class="rhythm-band-card"></div><span class="rhythm-band-tag"></span></div>
+      <div class="rhythm-band" data-bg="dark" data-imagery="decorative-illustration" data-chrome="dark-anchor-panel"><span class="rhythm-band-num">04</span><div class="rhythm-band-content"><p class="rhythm-band-label">Your first visit</p><p class="rhythm-band-meta">bg <code>dark</code> · img <code>decorative-illustration</code> · chrome <code>dark-anchor-panel</code></p></div><div class="rhythm-band-card"></div><span class="rhythm-band-tag"></span></div>
+      <div class="rhythm-band" data-bg="light" data-imagery="inset-photo" data-chrome="image-overlay"><span class="rhythm-band-num">05</span><div class="rhythm-band-content"><p class="rhythm-band-label">Your chiropractors</p><p class="rhythm-band-meta">bg <code>light</code> · img <code>inset-photo</code> · chrome <code>image-overlay</code></p></div><div class="rhythm-band-card"></div><span class="rhythm-band-tag"></span></div>
+      <div class="rhythm-band" data-bg="warm" data-imagery="none-with-justification" data-chrome="hairline-card"><span class="rhythm-band-num">06</span><div class="rhythm-band-content"><p class="rhythm-band-label">First visit &amp; insurance</p><p class="rhythm-band-meta">bg <code>warm</code> · img <code>none-with-justification</code> · chrome <code>hairline-card</code></p></div><div class="rhythm-band-card"></div><span class="rhythm-band-tag"></span></div>
+      <div class="rhythm-band" data-bg="light" data-imagery="inset-photo" data-chrome="hairline-card"><span class="rhythm-band-num">07</span><div class="rhythm-band-content"><p class="rhythm-band-label">Testimonials</p><p class="rhythm-band-meta">bg <code>light</code> · img <code>inset-photo</code> · chrome <code>hairline-card</code></p></div><div class="rhythm-band-card"></div><span class="rhythm-band-tag"></span></div>
+      <div class="rhythm-band" data-bg="accent" data-imagery="inset-photo" data-chrome="shadow-lift"><span class="rhythm-band-num">08</span><div class="rhythm-band-content"><p class="rhythm-band-label">Book your appointment</p><p class="rhythm-band-meta">bg <code>accent</code> · img <code>inset-photo</code> · chrome <code>shadow-lift</code></p></div><div class="rhythm-band-card"></div><span class="rhythm-band-tag"></span></div>
+      <div class="rhythm-band" data-bg="light" data-imagery="full-bleed-photo" data-chrome="image-overlay"><span class="rhythm-band-num">09</span><div class="rhythm-band-content"><p class="rhythm-band-label">Locations</p><p class="rhythm-band-meta">bg <code>light</code> · img <code>full-bleed-photo</code> · chrome <code>image-overlay</code></p></div><div class="rhythm-band-card"></div><span class="rhythm-band-tag"></span></div>
+      <div class="rhythm-band" data-bg="warm" data-imagery="none-with-justification" data-chrome="hairline-card"><span class="rhythm-band-num">10</span><div class="rhythm-band-content"><p class="rhythm-band-label">FAQ</p><p class="rhythm-band-meta">bg <code>warm</code> · img <code>none-with-justification</code> · chrome <code>hairline-card</code></p></div><div class="rhythm-band-card"></div><span class="rhythm-band-tag"></span></div>
+      <div class="rhythm-band" data-bg="dark" data-imagery="full-bleed-photo" data-chrome="open-layout"><span class="rhythm-band-num">11</span><div class="rhythm-band-content"><p class="rhythm-band-label">Closing CTA</p><p class="rhythm-band-meta">bg <code>dark</code> · img <code>full-bleed-photo</code> · chrome <code>open-layout</code></p></div><div class="rhythm-band-card"></div><span class="rhythm-band-tag"></span></div>
+      <div class="rhythm-band" data-bg="" data-imagery="" data-chrome="open-layout"><span class="rhythm-band-num">12</span><div class="rhythm-band-content"><p class="rhythm-band-label">Footer</p><p class="rhythm-band-meta">bg <code></code> · img <code></code> · chrome <code>open-layout</code></p></div><div class="rhythm-band-card"></div><span class="rhythm-band-tag"></span></div>
+    </div>
+    <p style="margin-top: 32px; font-size: 14px; color: var(--cpro-ink-soft); max-width: 760px;">Bands with no <code>data-bg</code> populated (empty token) are hidden via CSS — only sections declared in <code>shared.section_rhythm</code> render. Sections beyond 12 require manual template extension.</p>
+  </section>
+
+  <footer class="foot-note">
+    <span>ChiroPro · Bundle C · §4 Lock Preview</span>
+    <span>Audit · .claude/skills/mockup-demo-build/verticals/chiropro.md</span>
+    <span>Generated 2026-08-07</span>
+  </footer>
+
+</main>
+</body>
+</html>

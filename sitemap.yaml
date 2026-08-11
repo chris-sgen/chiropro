@@ -1,0 +1,53 @@
+# =============================================================================
+# ChiroPro — full-site assembly manifest
+# Standalone web-mockup run: there is no site-architect spec for this site, so
+# per SITEMAP-SCHEMA.md §2 the builder authors this file directly.
+# Read by verify-sitemap-complete.mjs and verify-nav-integrity.mjs.
+# =============================================================================
+
+site:  chiropro
+brand: "ChiroPro"
+design_system: design-system/     # tokens.css + structural.css + site.js, linked by every page
+
+# Canonical header nav — identical on every page, so nav cannot drift.
+nav:
+  - { label: "Home",      page: index }
+  - { label: "Services",  page: services }
+  - { label: "About us",  page: about }
+  - { label: "Locations", page: locations }
+  - { label: "Contact",   page: contact }
+
+footer:
+  - title: "Care"
+    links:
+      - { label: "Services",  page: services }
+      - { label: "About us",  page: about }
+      - { label: "Locations", page: locations }
+      - { label: "Contact",   page: contact }
+
+pages:
+  - { slug: index,     template: bespoke,     kind: home,    title: "ChiroPro — Chiropractic care in Riverside, Northgate & Harbourside", bespoke: true }
+  - { slug: services,  template: service-1,   kind: service, title: "Services — what we treat and how", parent: index }
+  - { slug: about,     template: about-1,     kind: about,   title: "About us — three clinics, three practitioners", parent: index }
+  - { slug: locations, template: locations-1, kind: about,   title: "Locations — Riverside, Northgate & Harbourside", parent: index }
+  - { slug: contact,   template: contact-1,   kind: about,   title: "Contact — book, call or ask a question", parent: index }
+
+# No data-driven SEO sets for a three-clinic practice: the location and service
+# counts are small enough that every page is hand-authored. Declared empty
+# rather than omitted so the intent is explicit rather than an oversight.
+templated: []
+
+# No ad-driven conversion funnels in scope. Booking is an in-page widget on
+# every page (audit §2.7), not a separate funnel, so there is nothing for the
+# conversion-page skill to build here.
+funnels: []
+
+# Not applicable — ChiroPro has no ecommerce surface.
+platform_pages: []
+
+# Notes carried from the audit for anyone picking this site up later:
+#   · Bundle C "Warm Slate Calm" locked 2026-08-07 (verticals/chiropro.md §4)
+#   · Booking widget is modelled per FORM-LAYOUTS.md #12 guidance — a styled
+#     in-page component, not a live third-party scheduler integration
+#   · Every image is fal.ai-generated and served from assets/ (brief requirement),
+#     which is why the three Unsplash-hardcoded gates cannot pass on this build

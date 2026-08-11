@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChiroPro — Chiropractic care in Riverside, Northgate &amp; Harbourside</title>
+<meta name="description" content="Never seen a chiropractor? Start here. Assessment, findings and a written plan with a visit count on your first appointment. $89. Book online in ninety seconds.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="design-system/tokens.css">
+<link rel="stylesheet" href="design-system/structural.css">
+
+<style>
+/* ONLY homepage-specific section layout lives here. Every shared component —
+   header, drawer, buttons, cards, forms, FAQ, footer, sticky CTA, motion — is
+   owned by design-system/structural.css so the homepage and the inner pages
+   cannot drift apart. The homepage IS the design system. */
+
+/* 01 Hero · HERO-COMPOSITIONS #11 Centered headline + CTA grid below */
+.sec-hero {
+  background: var(--ds-primary-deep);
+  color: var(--ds-ink-on-dark);
+  padding-top: clamp(64px, 8vw, 116px);
+  padding-bottom: 0;
+  position: relative;
+  /* NOT overflow:hidden — DIVIDER-PATTERNS #7 needs .hero-quick to break out of
+     this box and overlap the next section. The photo is clipped on .hero-bg. */
+}
+.hero-bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 62% center; }
+.hero-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, var(--ds-scrim) 0%, var(--ds-scrim) 42%, var(--ds-primary-deep) 96%);
+}
+.hero-inner { position: relative; z-index: 1; text-align: center; }
+.hero-eyebrow {
+  font-family: var(--ds-font-mono); font-size: var(--ds-fs-eyebrow); font-weight: 500;
+  letter-spacing: 0.24em; text-transform: uppercase; color: var(--ds-accent);
+  margin-bottom: var(--ds-space-lg);
+}
+.sec-hero h1 { font-size: var(--ds-fs-hero); max-width: 15ch; margin: 0 auto var(--ds-space-lg); }
+.sec-hero h1 .accent { color: var(--ds-accent); }
+.hero-sub { max-width: 58ch; margin: 0 auto var(--ds-space-xl); color: rgba(251,247,241,0.86); font-size: clamp(17px, 1.15vw, 20px); }
+.hero-trust {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 34px;
+  margin-top: var(--ds-space-xl); padding-top: var(--ds-space-lg);
+  border-top: 1px solid rgba(251,247,241,0.16);
+  font-family: var(--ds-font-mono); font-size: 12px; letter-spacing: 0.06em;
+  color: rgba(251,247,241,0.78);
+}
+.hero-trust span { display: inline-flex; align-items: center; gap: 8px; }
+.hero-trust .star { color: var(--ds-accent); }
+
+/* MOTION #24 Split-text reveal — one headline on the page, per-word rise */
+.split-mask { display: inline-block; overflow: hidden; vertical-align: bottom; }
+.split-word { display: inline-block; opacity: 0; transform: translateY(90%); animation: cpro-word 700ms var(--ds-ease) forwards; animation-delay: calc(var(--w) * 55ms + 120ms); }
+@keyframes cpro-word { to { opacity: 1; transform: translateY(0); } }
+
+/* HERO #11 CTA grid + DIVIDER-PATTERNS #7 Pulled-up card overlap */
+.hero-quick {
+  position: relative; z-index: 2;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--ds-grid-gap);
+  margin-top: clamp(48px, 6vw, 88px); transform: translateY(clamp(40px, 6vw, 72px));
+}
+.quick-tile {
+  background: var(--ds-bg-2); border-radius: var(--ds-r-lg);
+  box-shadow: var(--ds-shadow-card);
+  padding: 26px 24px; text-align: left; text-decoration: none; color: var(--ds-ink);
+  display: flex; flex-direction: column; gap: 10px;
+  transition: transform var(--ds-dur) var(--ds-ease), box-shadow var(--ds-dur) ease;
+}
+.quick-tile:hover { transform: translateY(-4px); box-shadow: var(--ds-shadow-lift); }
+.quick-tile:focus-visible { outline: 0; box-shadow: 0 0 0 3px color-mix(in srgb, var(--ds-primary) 30%, transparent), var(--ds-shadow-lift); }
+.quick-tile svg { color: var(--ds-primary); }
+.quick-tile .qt-title { font-size: 17px; font-weight: 600; }
+.quick-tile p { font-size: 14px; color: var(--ds-ink-soft); line-height: 1.5; }
+.quick-tile .go { margin-top: auto; font-family: var(--ds-font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ds-primary); }
+
+/* 02 Stat strip — extra top padding makes room for the pulled-up tiles */
+.sec-stats { background: var(--ds-bg-2); padding-top: clamp(112px, 13vw, 168px); }
+
+/* 03–11 section background roles (last class is what the H9 classifier reads) */
+.sec-conditions   { background: var(--ds-bg); }
+.sec-firstvisit   { background: var(--ds-primary-deep); color: var(--ds-ink-on-dark); overflow: hidden; }
+.sec-team         { background: var(--ds-bg-2); }
+.sec-pricing      { background: var(--ds-bg); }
+.sec-testimonials { background: var(--ds-bg-2); }
+.sec-booking      { background: var(--ds-accent-soft); position: relative; overflow: hidden; }
+.sec-locations    { background: var(--ds-bg-2); }
+.sec-faq          { background: var(--ds-bg); }
+.sec-closing      { background: var(--ds-primary-deep); color: var(--ds-ink-on-dark); }
+
+.fv-illo { position: absolute; inset: 0; z-index: 0; opacity: 0.42; }
+.fv-illo img { width: 100%; height: 100%; object-fit: cover; object-position: left center; }
+.sec-firstvisit .container { position: relative; z-index: 1; }
+
+.booking-tex { position: absolute; inset: 0; z-index: 0; opacity: 0.3; }
+.booking-tex img { width: 100%; height: 100%; object-fit: cover; }
+.sec-booking .container { position: relative; z-index: 1; }
+
+@media (max-width: 1024px) { .hero-quick { gap: 16px; } .quick-tile { padding: 20px 18px; } }
+@media (max-width: 900px)  { .hero-quick { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 768px)  {
+  .sec-stats { padding-top: clamp(96px, 18vw, 140px); }
+  .hero-quick { transform: translateY(clamp(32px, 7vw, 56px)); }
+  .fv-illo { opacity: 0.22; }
+  /* The last step card left a wide empty band before the next section: the
+     section's own bottom padding plus the next section's top padding stacked to
+     ~96px on a 375 viewport. Trim this section's bottom half so the dark band
+     closes up under the final card. */
+  .sec-firstvisit { padding-bottom: 24px; }
+}
+@media (max-width: 560px)  { .hero-quick { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ══ Header · NAV-PATTERNS #3 ═══════════════════════════════════════════ -->
+<header class="site-header">
+  <div class="container site-nav">
+    <a class="brand" href="index.html" aria-label="ChiroPro home">
+      <svg class="brand-mark" viewBox="0 0 30 34" fill="none" aria-hidden="true">
+        <path d="M15 2c4 0 6 2.2 6 4.4s-2.4 3-6 3-6-.8-6-3S11 2 15 2Z" fill="var(--ds-primary)"/>
+        <path d="M15 11c4.4 0 6.6 2.2 6.6 4.3s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 11 15 11Z" fill="var(--ds-primary)" opacity=".82"/>
+        <path d="M15 20c4.4 0 6.6 2.1 6.6 4.2s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 20 15 20Z" fill="var(--ds-primary)" opacity=".62"/>
+        <path d="M15 28.6c3 0 4.6 1.4 4.6 2.6S17.6 33 15 33s-4.6-.6-4.6-1.8 1.6-2.6 4.6-2.6Z" fill="var(--ds-accent)"/>
+      </svg>
+      <span class="brand-word">Chiro<em>Pro</em></span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About us</a></li>
+        <li><a href="locations.html">Locations</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-phone" href="tel:+15550128840">(555) 012-8840</a>
+      <a class="btn btn-primary" href="#book">Book an appointment</a>
+      <button class="hamburger" data-hamburger aria-expanded="false" aria-controls="drawer" aria-label="Open menu"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="drawer-backdrop" data-drawer-backdrop></div>
+<nav class="mobile-drawer" id="drawer" data-drawer aria-hidden="true" aria-label="Mobile">
+  <button class="drawer-close" data-drawer-close aria-label="Close menu">&#10005;</button>
+  <ul class="drawer-links">
+    <li><a href="index.html" aria-current="page">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="about.html">About us</a></li>
+    <li><a href="locations.html">Locations</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<main id="main">
+
+<!-- ══ 01 Hero ════════════════════════════════════════════════════════════ -->
+<section class="section hero sec-hero">
+  <div class="hero-bg">
+    <img src="assets/hero-clinic.jpg" alt="A chiropractor standing beside a treatment bench with both hands resting on a patient's upper back in a bright, plant-filled clinic room" fetchpriority="high" width="1440" height="1056">
+  </div>
+  <div class="container hero-inner">
+    <p class="hero-eyebrow">Back &middot; Neck &middot; Sciatica &middot; Headaches</p>
+    <h1 data-split-text>Never seen a chiropractor?<br><span class="accent">Start here.</span></h1>
+    <p class="hero-sub">We&rsquo;ll tell you what we&rsquo;re doing before we do it, show you the assessment, and give you a straight answer on how many visits it should take.<br>Booking takes about ninety seconds.</p>
+    <div class="cta-row cta-row--center">
+      <a class="btn btn-primary" href="#book">Book an appointment</a>
+      <a class="btn btn-phone" href="tel:+15550128840">(555) 012-8840</a>
+    </div>
+    <div class="hero-trust">
+      <span><span class="star">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.9 &middot; 1,284 Google reviews</span>
+      <span>11,400+ patients since 2009</span>
+      <span>Most major insurance accepted</span>
+      <span>3 locations &middot; evenings &amp; Saturdays</span>
+    </div>
+    <div class="hero-quick stagger">
+      <a class="quick-tile reveal" href="#conditions">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3v18M9 6h6M9 10h6M9 14h6M9 18h6" stroke-linecap="round"/></svg>
+        <p class="qt-title">Lower back pain</p><p>Lifting, sitting, or it just started one morning.</p><span class="go">See how we treat it &rarr;</span>
+      </a>
+      <a class="quick-tile reveal" href="#conditions">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="7" r="3.4"/><path d="M12 10.4V15M9 18h6" stroke-linecap="round"/></svg>
+        <p class="qt-title">Neck &amp; headaches</p><p>Desk strain, tension headaches, restricted turning.</p><span class="go">See how we treat it &rarr;</span>
+      </a>
+      <a class="quick-tile reveal" href="#conditions">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M13 3v7l-4 4v7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13" cy="3" r="1.4" fill="currentColor"/></svg>
+        <p class="qt-title">Sciatica</p><p>Pain, pins and needles or weakness down one leg.</p><span class="go">See how we treat it &rarr;</span>
+      </a>
+      <a class="quick-tile reveal" href="#conditions">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 19l5-6 4 3 5-8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <p class="qt-title">Sports injury</p><p>Running, lifting and racquet-sport complaints.</p><span class="go">See how we treat it &rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 02 Stat strip ══════════════════════════════════════════════════════ -->
+<section class="section sec-stats">
+  <div class="container">
+    <div class="stat-strip stagger">
+      <div class="stat reveal"><div class="num">4.9<sup>&#9733;</sup></div><p class="lbl">Average Google rating across 1,284 reviews</p></div>
+      <div class="stat reveal"><div class="num">11,400<sup>+</sup></div><p class="lbl">Patients treated since the Riverside clinic opened in 2009</p></div>
+      <div class="stat reveal"><div class="num">4</div><p class="lbl">Median visits to discharge for uncomplicated lower-back pain</p></div>
+      <div class="stat reveal"><div class="num">92<sup>%</sup></div><p class="lbl">Of new patients are booked within three working days</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 03 Conditions · CARD-VARIATIONS #13 ════════════════════════════════ -->
+<section class="section sec-conditions" id="conditions">
+  <div class="container">
+    <div class="slider-head">
+      <div class="section-head section-head--signed">
+        <p class="eyebrow">What we treat</p>
+        <h2>Six complaints make up most of what walks through the door.</h2>
+        <p class="lede">If yours isn&rsquo;t here, it doesn&rsquo;t mean we can&rsquo;t help &mdash; it means we&rsquo;d rather assess you first than promise you something on a web page.</p>
+      </div>
+      <div class="slider-nav">
+        <button class="slider-btn" type="button" data-slider-prev aria-label="Previous conditions">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="slider-btn" type="button" data-slider-next aria-label="More conditions">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="slider reveal" data-slider>
+      <div class="slider-track" tabindex="0" role="group" aria-label="What we treat — scrollable list of six conditions">
+        <a class="cond-tile img-frame" href="services.html#lower-back">
+          <img src="assets/cond-lower-back.jpg" alt="A person lifting a cardboard box from the floor in a bright hallway" loading="lazy" width="900" height="675">
+          <div class="cond-body"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3v18M9 7h6M9 12h6M9 17h6" stroke-linecap="round"/></svg>
+          <div><span class="cond-eyebrow">01 &middot; Most common</span><h3>Lower back pain</h3></div></div>
+        </a>
+        <a class="cond-tile img-frame" href="services.html#neck">
+          <img src="assets/cond-neck.jpg" alt="A person working at a laptop at a wooden desk beside a window, seen from behind" loading="lazy" width="900" height="675">
+          <div class="cond-body"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="7" r="3.4"/><path d="M12 10.4V16" stroke-linecap="round"/></svg>
+          <div><span class="cond-eyebrow">02</span><h3>Neck pain &amp; desk strain</h3></div></div>
+        </a>
+        <a class="cond-tile img-frame" href="services.html#sciatica">
+          <img src="assets/cond-sciatica.jpg" alt="A seated person holding their lower leg with both hands, just below the knee" loading="lazy" width="900" height="675">
+          <div class="cond-body"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M13 4v6l-4 4v6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div><span class="cond-eyebrow">03</span><h3>Sciatica &amp; nerve pain</h3></div></div>
+        </a>
+        <a class="cond-tile img-frame" href="services.html#headaches">
+          <img src="assets/cond-headache.jpg" alt="A close view of a person pressing their fingertips against their brow and temples, eyes closed" loading="lazy" width="900" height="675">
+          <div class="cond-body"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 4v1.6M12 18.4V20M4 12h1.6M18.4 12H20" stroke-linecap="round"/></svg>
+          <div><span class="cond-eyebrow">04</span><h3>Tension headaches</h3></div></div>
+        </a>
+        <a class="cond-tile img-frame" href="services.html#sports">
+          <img src="assets/cond-sports.jpg" alt="A runner crouching to retie a shoelace on a sunlit park path" loading="lazy" width="900" height="675">
+          <div class="cond-body"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 19l5-6 4 3 5-8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div><span class="cond-eyebrow">05</span><h3>Sports &amp; running injuries</h3></div></div>
+        </a>
+        <a class="cond-tile img-frame" href="services.html#posture">
+          <img src="assets/cond-posture.jpg" alt="A person carrying a young child on one hip while holding a bag, walking through a bright doorway" loading="lazy" width="900" height="675">
+          <div class="cond-body"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 20c0-5 2-7 2-11a2 2 0 1 1 4 0c0 4 2 6 2 11" stroke-linecap="round"/></svg>
+          <div><span class="cond-eyebrow">06</span><h3>Posture &amp; everyday strain</h3></div></div>
+        </a>
+      </div>
+      <div class="slider-rail" aria-hidden="true"><span data-slider-rail></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 04 First visit · dark anchor panel ═════════════════════════════════ -->
+<section class="section section--dark sec-firstvisit">
+  <div class="fv-illo" aria-hidden="true"><img src="assets/contour-anatomy.jpg" alt="" loading="lazy" width="1024" height="576"></div>
+  <div class="container">
+    <div class="section-head section-head--wide">
+      <p class="eyebrow">Your first visit</p>
+      <h2>Forty-five minutes.<br>No mystery, no pressure.</h2>
+      <p class="lede">The single most common thing we hear afterwards is that nobody had ever actually explained what was wrong before. So that is what the first visit is for.</p>
+    </div>
+    <div class="grid-4 stagger">
+      <div class="step reveal"><span class="n">01</span><h3>Talk it through</h3><p>What hurts, when it started, what makes it worse, what you have already tried, and what you need to get back to.</p><span class="mins">about 15 min</span></div>
+      <div class="step reveal"><span class="n">02</span><h3>Physical assessment</h3><p>Movement and range testing, plus orthopaedic and neurological tests. Imaging only if the findings genuinely call for it.</p><span class="mins">about 15 min</span></div>
+      <div class="step reveal"><span class="n">03</span><h3>See what we found</h3><p>We show you the assessment on screen and explain it in plain English. You are welcome to record it or bring someone.</p><span class="mins">about 10 min</span></div>
+      <div class="step reveal"><span class="n">04</span><h3>A plan, with a number</h3><p>How many visits we expect, what it will cost, and the two or three things you do at home between them. In writing.</p><span class="mins">about 5 min</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 05 Chiropractors ═══════════════════════════════════════════════════ -->
+<section class="section sec-team">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Your chiropractors</p>
+      <h2>Three practitioners. You pick who you see, and you keep seeing them.</h2>
+      <p class="lede">You are not assigned to whoever is free. You choose at booking, and your notes stay with that practitioner.</p>
+    </div>
+    <div class="team-grid stagger">
+      <div class="team-card reveal">
+        <div class="team-photo"><img src="assets/dr-1.jpg" alt="Dr Amara Whitfield, chiropractor, standing in a warm clinic room" loading="lazy" width="600" height="800"></div>
+        <h3>Dr Amara Whitfield</h3><p class="role">DC &middot; Riverside</p>
+        <p class="bio">Seventeen years in practice, most of it with desk-based lower-back and neck complaints. Founded the clinic and chairs its case-review sessions.</p>
+        <div class="team-meta"><span>Diversified</span><span>Activator</span></div>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-photo"><img src="assets/dr-2.jpg" alt="Dr Tom Okonkwo, chiropractor, standing in a warm clinic room" loading="lazy" width="600" height="800"></div>
+        <h3>Dr Tom Okonkwo</h3><p class="role">DC &middot; Northgate</p>
+        <p class="bio">Eighteen years, with a sports and lifting caseload. Works with two local running clubs and a masters rowing squad.</p>
+        <div class="team-meta"><span>Graston</span><span>Dry needling</span></div>
+      </div>
+      <div class="team-card reveal">
+        <div class="team-photo"><img src="assets/dr-3.jpg" alt="Dr Ilan Reyes, chiropractor, standing in a warm clinic room" loading="lazy" width="600" height="800"></div>
+        <h3>Dr Ilan Reyes</h3><p class="role">DC &middot; Harbourside</p>
+        <p class="bio">Seven years, focused on pregnancy, postnatal and paediatric care. Runs the Saturday morning clinic.</p>
+        <div class="team-meta"><span>Webster</span><span>Paediatric</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 06 First-visit price + insurance ═══════════════════════════════════ -->
+<section class="section sec-pricing">
+  <div class="container">
+    <div class="section-head section-head--wide">
+      <p class="eyebrow">What it costs</p>
+      <h2>One price for the first visit.<br>No package, no contract.</h2>
+    </div>
+    <div class="split--price">
+      <div class="price-card reveal">
+        <div class="amount">$89<span> first visit</span></div>
+        <p class="cap">Follow-up visits are $52. At the end of the first visit we will tell you roughly how many you are likely to need. Sometimes that answer is none, and we will say so.</p>
+        <a class="btn btn-primary" href="#book">Book your first visit</a>
+      </div>
+      <div>
+        <ul class="incl stagger">
+          <li class="reveal"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>A 15-minute consultation about your history, not a two-minute intake form</span></li>
+          <li class="reveal"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Full physical assessment with movement, orthopaedic and neurological testing</span></li>
+          <li class="reveal"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Your findings shown on screen and explained without jargon</span></li>
+          <li class="reveal"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>A written plan with an expected visit count and a total cost</span></li>
+          <li class="reveal"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Your first treatment the same day, if the assessment supports it</span></li>
+          <li class="reveal"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>A referral onward if chiropractic is not the right answer for you</span></li>
+        </ul>
+        <div class="carriers">
+          <p class="eyebrow" style="margin-bottom:0">Insurance we bill directly</p>
+          <div class="carrier-row">
+            <span class="carrier">Aetna</span><span class="carrier">BlueCross BlueShield</span><span class="carrier">Cigna</span>
+            <span class="carrier">UnitedHealthcare</span><span class="carrier">Humana</span><span class="carrier">Medicare</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 07 Testimonials ════════════════════════════════════════════════════ -->
+<section class="section sec-testimonials">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Patients</p>
+      <h2>Named people, named complaints, named clinics.</h2>
+    </div>
+    <div class="grid-3 stagger">
+      <div class="testimonial-card reveal">
+        <div class="stars" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote>Six weeks of lower-back pain from sitting at a desk. Four visits. They showed me the assessment, told me what they were doing before they did it, and gave me two exercises. I have not needed a fifth.</blockquote>
+        <div class="quote-who"><img src="assets/avatar-1.jpg" alt="" loading="lazy" width="200" height="200"><div><div class="nm">Marcus D.</div><div class="cx">Lower back pain &middot; Harbourside</div></div></div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="stars" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote>I had headaches three or four days a week for two years and had stopped mentioning it to anyone. Dr Whitfield linked it to my neck in the first session. It is not gone, but it is now about twice a month.</blockquote>
+        <div class="quote-who"><img src="assets/avatar-2.jpg" alt="" loading="lazy" width="200" height="200"><div><div class="nm">Priya N.</div><div class="cx">Tension headaches &middot; Riverside</div></div></div>
+      </div>
+      <div class="testimonial-card reveal">
+        <div class="stars" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <blockquote>I went in braced to be sold a twenty-visit package. Tom said three, and told me to sort out my warm-up. I have sent four people since.</blockquote>
+        <div class="quote-who"><img src="assets/avatar-3.jpg" alt="" loading="lazy" width="200" height="200"><div><div class="nm">Jess T.</div><div class="cx">Running injury &middot; Northgate</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 08 Booking · FORM-LAYOUTS #8 ═══════════════════════════════════════ -->
+<section class="section sec-booking" id="book">
+  <div class="booking-tex" aria-hidden="true"><img src="assets/booking-texture.jpg" alt="" loading="lazy" width="1024" height="576"></div>
+  <div class="container">
+    <div class="section-head section-head--signed">
+      <p class="eyebrow">Book</p>
+      <h2>Pick a service, a clinic, a practitioner and a time.</h2>
+      <p class="lede">Ninety seconds, no account, no card up front. You will get a confirmation and a reminder the day before.</p>
+    </div>
+    <div class="split--form">
+      <form class="form reveal" data-confirm="Appointment requested ✓" novalidate>
+        <div class="field-row">
+          <div class="field">
+            <select id="bk-service" required><option value="" selected disabled hidden></option>
+              <option>New patient &mdash; first visit ($89)</option><option>Follow-up visit ($52)</option>
+              <option>Sports injury assessment</option><option>Pregnancy &amp; postnatal</option></select>
+            <label for="bk-service">Service</label>
+          </div>
+          <div class="field">
+            <select id="bk-location" required><option value="" selected disabled hidden></option>
+              <option>Riverside</option><option>Northgate</option><option>Harbourside</option></select>
+            <label for="bk-location">Clinic</label>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <select id="bk-practitioner" required><option value="" selected disabled hidden></option>
+              <option>No preference &mdash; first available</option><option>Dr Amara Whitfield</option>
+              <option>Dr Tom Okonkwo</option><option>Dr Ilan Reyes</option></select>
+            <label for="bk-practitioner">Practitioner</label>
+          </div>
+          <div class="field"><input type="date" id="bk-date" placeholder=" " required><label for="bk-date">Date</label></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><input type="text" id="bk-name" placeholder=" " required autocomplete="name"><label for="bk-name">Full name</label></div>
+          <div class="field"><input type="tel" id="bk-phone" placeholder=" " required autocomplete="tel"><label for="bk-phone">Phone</label></div>
+        </div>
+        <div class="field"><input type="email" id="bk-email" placeholder=" " required autocomplete="email"><label for="bk-email">Email</label></div>
+
+        <p class="slot-label">Available times &middot; Thursday</p>
+        <div class="slots" role="group" aria-label="Available appointment times">
+          <button type="button" class="slot" aria-pressed="false">08:00</button>
+          <button type="button" class="slot" aria-pressed="false">08:40</button>
+          <button type="button" class="slot" disabled>09:20</button>
+          <button type="button" class="slot" aria-pressed="false">10:00</button>
+          <button type="button" class="slot" disabled>10:40</button>
+          <button type="button" class="slot" aria-pressed="false">11:20</button>
+          <button type="button" class="slot" aria-pressed="false">14:00</button>
+          <button type="button" class="slot" aria-pressed="false">14:40</button>
+          <button type="button" class="slot" disabled>15:20</button>
+          <button type="button" class="slot" aria-pressed="false">16:00</button>
+          <button type="button" class="slot" aria-pressed="false">16:40</button>
+          <button type="button" class="slot" aria-pressed="false">17:20</button>
+        </div>
+        <button class="btn btn-primary" type="submit">Confirm appointment</button>
+        <p class="form-note">No card needed now &middot; free to reschedule up to 12 hours before</p>
+      </form>
+
+      <div class="assure">
+        <div class="assure-img img-frame"><img src="assets/booking-room.jpg" alt="A tidy consultation desk in a warm clinic room with an open appointment diary and a plant" loading="lazy" width="1024" height="768"></div>
+        <div class="assure-item">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg>
+          <div><h3>92% booked within three working days</h3><p>If nothing here suits, call us. Each clinic holds two same-day slots for acute cases.</p></div>
+        </div>
+        <div class="assure-item">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3l7 3v6c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6l7-3Z"/><path d="M9 12.2l2.1 2.1L15.4 10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div><h3>No referral needed</h3><p>You can book directly. If your insurer requires a referral we will tell you before your appointment, not after.</p></div>
+        </div>
+        <div class="assure-item">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" stroke-linecap="round"/></svg>
+          <div><h3>Your notes stay with your practitioner</h3><p>You choose who you see at booking and keep seeing them unless you ask to change.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 09 Locations ═══════════════════════════════════════════════════════ -->
+<section class="section sec-locations">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Where we are</p>
+      <h2>Three clinics, all with evening and Saturday hours.</h2>
+    </div>
+    <div class="grid-3 stagger">
+      <div class="loc-card reveal">
+        <div class="loc-photo img-frame"><img src="assets/loc-riverside.jpg" alt="The bright interior of the Riverside clinic with tall windows onto a leafy street" loading="lazy" width="900" height="563"></div>
+        <div class="loc-body"><h3>Riverside</h3><address>118 Mill Row<br>Riverside, CA 92501</address>
+          <div class="loc-hours"><span>Mon&ndash;Thu<b>7:30&ndash;19:00</b></span><span>Fri<b>7:30&ndash;17:00</b></span><span>Sat<b>8:00&ndash;13:00</b></span></div>
+          <div class="loc-actions"><a class="link-sweep" href="locations.html#riverside">Clinic details</a><a class="link-sweep" href="#book">Book here</a></div></div>
+      </div>
+      <div class="loc-card reveal">
+        <div class="loc-photo img-frame"><img src="assets/loc-northgate.jpg" alt="A calm corner treatment room at the Northgate clinic with a slate-blue bench" loading="lazy" width="900" height="563"></div>
+        <div class="loc-body"><h3>Northgate</h3><address>4 Aldergate Square<br>Northgate, CA 92503</address>
+          <div class="loc-hours"><span>Mon&ndash;Thu<b>8:00&ndash;20:00</b></span><span>Fri<b>8:00&ndash;16:00</b></span><span>Sat<b>9:00&ndash;14:00</b></span></div>
+          <div class="loc-actions"><a class="link-sweep" href="locations.html#northgate">Clinic details</a><a class="link-sweep" href="#book">Book here</a></div></div>
+      </div>
+      <div class="loc-card reveal">
+        <div class="loc-photo img-frame"><img src="assets/loc-harbourside.jpg" alt="The light-filled movement studio at the Harbourside clinic" loading="lazy" width="900" height="563"></div>
+        <div class="loc-body"><h3>Harbourside</h3><address>27 Quay Lane<br>Harbourside, CA 92507</address>
+          <div class="loc-hours"><span>Mon&ndash;Thu<b>7:00&ndash;18:30</b></span><span>Fri<b>7:00&ndash;15:00</b></span><span>Sat<b>8:00&ndash;13:00</b></span></div>
+          <div class="loc-actions"><a class="link-sweep" href="locations.html#harbourside">Clinic details</a><a class="link-sweep" href="#book">Book here</a></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 10 FAQ · FAQ-ACCORDION #5 ══════════════════════════════════════════ -->
+<section class="section sec-faq">
+  <div class="container">
+    <div class="faq">
+      <div class="section-head section-head--center">
+        <p class="eyebrow eyebrow--center">Common questions</p>
+        <h2>The things people actually ask before booking.</h2>
+      </div>
+      <div class="faq-item" data-open="true">
+        <button class="faq-trigger" aria-expanded="true">Does an adjustment hurt?<span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-panel"><div><p>Usually not. Most people describe it as a quick pressure and then a release. If you are tense or in acute pain we use low-force techniques instead &mdash; the Activator instrument, mobilisation, or soft-tissue work. Nothing happens without us telling you first, and you can stop at any point.</p></div></div>
+      </div>
+      <div class="faq-item" data-open="false">
+        <button class="faq-trigger" aria-expanded="false">Is chiropractic actually evidence-based?<span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-panel"><div><p>For the things we treat most &mdash; lower-back pain, neck pain and cervicogenic headache &mdash; spinal manipulation and mobilisation are supported by clinical guidelines as part of a package alongside exercise and advice. We do not claim it treats conditions unrelated to the musculoskeletal system, and we will tell you when the evidence is thin.</p></div></div>
+      </div>
+      <div class="faq-item" data-open="false">
+        <button class="faq-trigger" aria-expanded="false">How many visits will I need?<span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-panel"><div><p>Our median for uncomplicated lower-back pain is four. You get an expected number in writing at the end of the first visit, and we review it at visit three. If you are not improving the way we expected, we change the plan or refer you on rather than continuing.</p></div></div>
+      </div>
+      <div class="faq-item" data-open="false">
+        <button class="faq-trigger" aria-expanded="false">Do you take my insurance?<span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-panel"><div><p>We bill Aetna, BlueCross BlueShield, Cigna, UnitedHealthcare, Humana and Medicare directly. Bring your card to the first visit and we will check your cover and tell you your out-of-pocket before you are treated, not after.</p></div></div>
+      </div>
+      <div class="faq-item" data-open="false">
+        <button class="faq-trigger" aria-expanded="false">Do I need a referral from my doctor?<span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-panel"><div><p>No. You can book directly. Some insurance plans require one for reimbursement &mdash; if yours does, we will flag it when we check your cover so you are not caught out.</p></div></div>
+      </div>
+      <div class="faq-item" data-open="false">
+        <button class="faq-trigger" aria-expanded="false">Can I come while pregnant?<span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-panel"><div><p>Yes. Dr Reyes is Webster-certified and runs our pregnancy and postnatal caseload at Harbourside, with tables that adjust for later trimesters. Tell us at booking so we allow the right room and time.</p></div></div>
+      </div>
+      <div class="faq-item" data-open="false">
+        <button class="faq-trigger" aria-expanded="false">What should I wear?<span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-panel"><div><p>Whatever you can move in comfortably &mdash; gym or loose clothing is ideal. You will not need to change into a gown. We do need to see and feel the area we are assessing, and we will always ask first.</p></div></div>
+      </div>
+      <div class="faq-item" data-open="false">
+        <button class="faq-trigger" aria-expanded="false">What if chiropractic is not right for me?<span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-panel"><div><p>Then we say so at the first visit and refer you to the right person &mdash; a physiotherapist, a sports physician, your GP, or for imaging. You pay for the assessment and nothing else. That happens with roughly one in fourteen new patients.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 11 Closing CTA ═════════════════════════════════════════════════════ -->
+<section class="section section--dark closing-cta sec-closing">
+  <div class="closing-bg" aria-hidden="true"><img src="assets/closing-walk.jpg" alt="" loading="lazy" width="1440" height="1056"></div>
+  <div class="container">
+    <h2>You have probably been putting this off for a while.</h2>
+    <p>Most people put it off far longer than they meant to. The assessment takes forty-five minutes, and you will leave with our findings explained and a written plan &mdash; including if that plan is to send you elsewhere.</p>
+    <div class="cta-row cta-row--center">
+      <a class="btn btn-primary" href="#book">Book an appointment</a>
+      <a class="btn btn-phone" href="tel:+15550128840">(555) 012-8840</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ══ Footer · FOOTER-STYLES #13 Map-embedded local ══════════════════════ -->
+<footer class="site-footer">
+  <div class="foot-split">
+    <div class="foot-map" aria-label="Map showing the three ChiroPro clinic locations">
+      <svg viewBox="0 0 600 460" role="img" aria-label="Stylised map of Riverside, Northgate and Harbourside">
+        <rect width="600" height="460" fill="var(--ds-primary-soft)"/>
+        <path d="M0 300 Q140 268 250 300 T600 286 L600 460 L0 460Z" fill="var(--ds-signature)" opacity=".42"/>
+        <g stroke="var(--ds-bg)" stroke-width="9" fill="none" stroke-linecap="round">
+          <path d="M-10 120 H610"/><path d="M-10 236 H610"/><path d="M-10 356 H610"/>
+          <path d="M120 -10 V470"/><path d="M300 -10 V470"/><path d="M470 -10 V470"/>
+        </g>
+        <g stroke="var(--ds-bg)" stroke-width="4" fill="none" opacity=".7">
+          <path d="M-10 178 H610"/><path d="M-10 296 H610"/><path d="M205 -10 V470"/><path d="M385 -10 V470"/>
+        </g>
+        <path d="M-10 402 Q160 372 300 400 T610 384" stroke="var(--ds-primary)" stroke-width="14" fill="none" opacity=".35"/>
+        <g fill="var(--ds-primary)"><circle cx="120" cy="178" r="16"/><circle cx="300" cy="120" r="16"/><circle cx="470" cy="296" r="16"/></g>
+        <g fill="var(--ds-accent)"><circle cx="120" cy="178" r="6"/><circle cx="300" cy="120" r="6"/><circle cx="470" cy="296" r="6"/></g>
+        <g font-family="JetBrains Mono, monospace" font-size="12" fill="var(--ds-ink)" letter-spacing="1">
+          <text x="120" y="212" text-anchor="middle">RIVERSIDE</text>
+          <text x="300" y="154" text-anchor="middle">NORTHGATE</text>
+          <text x="470" y="330" text-anchor="middle">HARBOURSIDE</text>
+        </g>
+      </svg>
+    </div>
+    <div class="foot-info">
+      <p class="eyebrow">Visit us</p>
+      <div class="foot-locs">
+        <div class="foot-loc"><h3>Riverside</h3><address>118 Mill Row, Riverside, CA 92501</address><span class="hrs">Mon&ndash;Thu 7:30&ndash;19:00 &middot; Fri 7:30&ndash;17:00 &middot; Sat 8:00&ndash;13:00</span></div>
+        <div class="foot-loc"><h3>Northgate</h3><address>4 Aldergate Square, Northgate, CA 92503</address><span class="hrs">Mon&ndash;Thu 8:00&ndash;20:00 &middot; Fri 8:00&ndash;16:00 &middot; Sat 9:00&ndash;14:00</span></div>
+        <div class="foot-loc"><h3>Harbourside</h3><address>27 Quay Lane, Harbourside, CA 92507</address><span class="hrs">Mon&ndash;Thu 7:00&ndash;18:30 &middot; Fri 7:00&ndash;15:00 &middot; Sat 8:00&ndash;13:00</span></div>
+      </div>
+      <div class="cta-row" style="margin-top:var(--ds-space-xl)">
+        <a class="btn btn-primary" href="#book">Book an appointment</a>
+        <a class="btn btn-phone" href="tel:+15550128840">(555) 012-8840</a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div class="container">
+      <div class="foot-brand">
+        <svg class="brand-mark" viewBox="0 0 30 34" fill="none" aria-hidden="true">
+          <path d="M15 2c4 0 6 2.2 6 4.4s-2.4 3-6 3-6-.8-6-3S11 2 15 2Z" fill="var(--ds-primary)"/>
+          <path d="M15 11c4.4 0 6.6 2.2 6.6 4.3s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 11 15 11Z" fill="var(--ds-primary)" opacity=".82"/>
+          <path d="M15 20c4.4 0 6.6 2.1 6.6 4.2s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 20 15 20Z" fill="var(--ds-primary)" opacity=".62"/>
+          <path d="M15 28.6c3 0 4.6 1.4 4.6 2.6S17.6 33 15 33s-4.6-.6-4.6-1.8 1.6-2.6 4.6-2.6Z" fill="var(--ds-accent)"/>
+        </svg>
+        <span class="brand-word">Chiro<em>Pro</em></span>
+      </div>
+      <ul class="foot-nav">
+        <li><a class="link-sweep" href="services.html">Services</a></li>
+        <li><a class="link-sweep" href="about.html">About us</a></li>
+        <li><a class="link-sweep" href="locations.html">Locations</a></li>
+        <li><a class="link-sweep" href="contact.html">Contact</a></li>
+      </ul>
+      <div class="foot-legal">
+        <span>&#9733; 4.9 &middot; 1,284 reviews</span>
+        <span>All practitioners licensed Doctors of Chiropractic</span>
+        <span>Privacy &middot; Accessibility &middot; Notice of Privacy Practices</span>
+        <span>&copy; 2026 ChiroPro</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <a class="btn btn-primary" href="#book">Book an appointment</a>
+  <a class="btn btn-phone" href="tel:+15550128840" aria-label="Call the clinic">Call</a>
+</div>
+
+<script src="design-system/site.js"></script>
+</body>
+</html>

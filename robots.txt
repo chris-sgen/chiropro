@@ -1,0 +1,10 @@
+# REVIEW PREVIEW - not a production site.
+#
+# ChiroPro is a fictional practice used as a design mockup. Indexing is disallowed
+# deliberately: the pages carry invented practitioners, testimonials, addresses and
+# phone numbers, and must not surface in search as if they described a real clinic.
+#
+# Replace this file at production launch with the real policy.
+
+User-agent: *
+Disallow: /

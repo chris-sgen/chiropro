@@ -1,0 +1,149 @@
+/* =============================================================================
+ * ChiroPro — design system tokens
+ * Bundle C "Warm Slate Calm" — locked 2026-08-07
+ *
+ * Every value below traces to verticals/chiropro.md §4.bundles.C.
+ * Shape per references/BRAND-TOKEN-SCHEMA.md. Flat --ds-* names, no prefix:
+ * each site links its own tokens.css, so two sites never share a DOM.
+ *
+ * Palette provenance (COLOR-THEORY-PRESETS.md #55 Wellness Therapist Soft, tuned):
+ *   primary   deepened from the catalog #6E8AA8 — that value fails 4.5:1 on cream
+ *   ink       Tia observed warm near-black  #282725  (asktia.com, 72 occurrences)
+ *   bg        Tia observed cream            #FCF4E9
+ *   accent-soft Tia observed warm sand      #ECDCCD
+ *   signature Tia observed sage             #D6DEBA
+ *   accent    catalog champagne             #C2A878 (unchanged)
+ * Tia's plum / magenta / coral are excluded per audit §1.5 anti-observations.
+ * ========================================================================== */
+
+:root {
+  /* ── Color ───────────────────────────────────────────────────────────── */
+  --ds-primary:        #52708C;  /* CTAs, links, primary brand surfaces      */
+  --ds-primary-deep:   #24384B;  /* Dark sections, footer, hero scrim        */
+  --ds-primary-soft:   #DCE5EE;  /* Tinted surfaces, eyebrows, soft cards    */
+  --ds-accent:         #C2A878;  /* Champagne — DECORATIVE only (2.3:1 on white) */
+  /* Text-safe champagne. --ds-accent fails WCAG AA for text on every light
+   * surface, so any accent-coloured text that carries meaning uses this instead;
+   * --ds-accent stays for arcs, rules, hover fills and dark-surface text. */
+  --ds-accent-ink:     #7E5F2E;
+  --ds-accent-soft:    #ECDCCD;  /* Warm sand — tinted accent bands          */
+  --ds-bg-surface:     #FCF4E9;  /* Page background (warm cream)             */
+  --ds-bg-surface-2:   #FFFFFF;  /* Card / elevated surface                  */
+  --ds-bg-warm:        #F6EADC;  /* Warm alternate section band              */
+  --ds-ink:            #282725;  /* Default text (warm near-black)           */
+  --ds-ink-soft:       #6E6A64;  /* Secondary text                           */
+  --ds-line:           #E6DDD1;  /* Borders, dividers, hairlines             */
+  --ds-ink-on-dark:    #FBF7F1;  /* Text on dark / accent surfaces           */
+  --ds-scrim:          rgba(36, 56, 75, 0.72);  /* Image-overlay legibility  */
+  --ds-scrim-soft:     rgba(36, 56, 75, 0.42);
+
+  /* Optional */
+  --ds-signature:      #D6DEBA;  /* Sage — badges, dividers, accents         */
+
+  /* Short surface aliases. BRAND-TOKEN-SCHEMA.md names the page/card surfaces
+   * --ds-bg-surface / --ds-bg-surface-2, but the H9 section-rhythm classifier
+   * matches the shorter --*-bg-2 / --*-bg forms. Both names are defined and
+   * resolve to the same value, so the documented schema contract and the gate
+   * agree instead of silently disagreeing. Section rules below use the short
+   * form so H9 can classify each band's bg correctly. */
+  --ds-bg:   var(--ds-bg-surface);
+  --ds-bg-2: var(--ds-bg-surface-2);
+  --ds-warning:        #A85D4E;  /* Muted clay — urgent flags only, sparingly*/
+  --ds-warning-soft:   #F2DED8;
+  --ds-success:        #5F7F62;  /* Confirmation states in the booking flow  */
+
+  /* ── Typography — TYPOGRAPHY-PAIRINGS.md #8 Lexend + Inter ───────────── */
+  --ds-font-display: 'Lexend', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ds-font-body:    'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ds-font-mono:    'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /* ── Radius — SURFACE-PATTERNS.md #3 Modern 8-12px ───────────────────── */
+  --ds-r-sm:   8px;
+  --ds-r-md:  12px;
+  --ds-r-lg:  16px;
+  --ds-r-xl:  24px;
+  --ds-r-pill: 999px;
+
+  /* ── Shadow — SURFACE-PATTERNS.md #11 Deep-shadow-floating ───────────── */
+  /* Palette-toned alpha (warm near-black 40,39,37), never pure black.      */
+  --ds-shadow-card: 0 10px 25px -5px rgba(40, 39, 37, 0.10),
+                    0  8px 10px -6px rgba(40, 39, 37, 0.05);
+  --ds-shadow-lift: 0 18px 38px -8px rgba(40, 39, 37, 0.16),
+                    0 10px 14px -8px rgba(40, 39, 37, 0.07);
+  --ds-shadow-nav:  0  2px 12px -2px rgba(40, 39, 37, 0.08);
+
+  /* ── Spacing scale (structural, fixed steps) ─────────────────────────── */
+  --ds-space-2xs:  4px;
+  --ds-space-xs:   8px;
+  --ds-space-sm:  12px;
+  --ds-space-md:  16px;
+  --ds-space-lg:  24px;
+  --ds-space-xl:  40px;
+  --ds-space-2xl: 64px;
+  --ds-space-3xl: 96px;
+
+  /* ── Layout — audit §5.2 / §5.3 ──────────────────────────────────────── */
+  --ds-section-py:      96px;
+  --ds-container-max: 1340px;
+  --ds-container-pad:   32px;
+  --ds-card-pad:        30px;
+  --ds-grid-gap:        28px;
+
+  /* ── Motion ──────────────────────────────────────────────────────────── */
+  --ds-ease: cubic-bezier(0.65, 0, 0.35, 1);
+  --ds-ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ds-dur: 220ms;
+  --ds-dur-fast: 160ms;
+  --ds-dur-slow: 320ms;
+
+  /* ── Type scale — audit §5.1, with the §5.6 Bundle C body bump ───────── */
+  /* Lexend was engineered for reading speed at slightly larger optical      */
+  /* sizes, and the Bundle C premise is the anxious first-time reader — the  */
+  /* extra body step is the POINT of picking Lexend, not a deviation.        */
+  --ds-fs-hero:    clamp(48px, 6.6vw, 96px);
+  --ds-fs-h2:      clamp(32px, 3.8vw, 56px);
+  --ds-fs-h3:      clamp(22px, 1.9vw, 28px);
+  --ds-fs-body:    clamp(16px, 0.9vw, 18px);
+  --ds-fs-small:   clamp(13px, 0.8vw, 14px);
+  --ds-fs-eyebrow: 11px;
+  --ds-fs-btn:     clamp(15px, 0.9vw, 16px);
+  --ds-fs-stat:    clamp(40px, 5vw, 72px);
+}
+
+/* ── Responsive layout steps — audit §5.2 / §5.3 ───────────────────────── */
+@media (max-width: 1024px) {
+  :root {
+    --ds-section-py: 80px;
+    --ds-container-pad: 32px;
+    --ds-card-pad: 28px;
+    --ds-grid-gap: 24px;
+  }
+}
+@media (max-width: 768px) {
+  :root {
+    --ds-section-py: 64px;
+    --ds-container-pad: 24px;
+    --ds-card-pad: 26px;
+    --ds-grid-gap: 20px;
+  }
+}
+@media (max-width: 480px) {
+  :root {
+    --ds-section-py: 48px;
+    --ds-container-pad: 20px;
+    --ds-card-pad: 24px;
+    --ds-grid-gap: 16px;
+  }
+}
+
+/* Respect the OS reduced-motion preference across every page of the site.  */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChiroPro — Design system</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="design-system/tokens.css">
+<link rel="stylesheet" href="design-system/structural.css">
+<style>
+/* =============================================================================
+ * ChiroPro — DESIGN SYSTEM (implementation only)
+ * Identity and voice live in brand-card.html. This page is the contract every
+ * Phase 2 page inherits: tokens, header + footer, components in every state,
+ * live motion, drawer-open, sticky CTA, and the section-rhythm reference.
+ * ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; font-family: var(--ds-font-body); font-size: 16px; line-height: 1.6; color: var(--ds-ink); background: var(--ds-bg); -webkit-font-smoothing: antialiased; }
+h1,h2,h3,h4 { font-family: var(--ds-font-display); font-weight: 600; letter-spacing: -.02em; line-height: 1.15; margin: 0; }
+p { margin: 0; } img { display: block; max-width: 100%; }
+code, .mono { font-family: var(--ds-font-mono); }
+
+.page { max-width: 1180px; margin: 0 auto; padding: 0 32px 120px; }
+.masthead { background: var(--ds-primary-deep); color: var(--ds-ink-on-dark); margin-bottom: 64px; }
+.masthead-in { max-width: 1180px; margin: 0 auto; padding: 52px 32px; }
+.masthead .tag { font-family: var(--ds-font-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--ds-accent); margin-bottom: 16px; }
+.masthead h1 { font-size: clamp(34px,4.4vw,54px); }
+.masthead p { margin-top: 12px; color: rgba(251,247,241,.74); max-width: 66ch; }
+
+.sec { margin-bottom: 76px; }
+.sec-h { display: flex; align-items: baseline; gap: 16px; border-bottom: 1px solid var(--ds-line); padding-bottom: 14px; margin-bottom: 28px; flex-wrap: wrap; }
+.sec-h .n { font-family: var(--ds-font-mono); font-size: 11px; letter-spacing: .2em; color: var(--ds-accent); }
+.sec-h h2 { font-size: 26px; }
+.sec-h .note { margin-left: auto; font-family: var(--ds-font-mono); font-size: 11px; color: var(--ds-ink-soft); }
+.blurb { color: var(--ds-ink-soft); font-size: 15px; max-width: 74ch; margin-bottom: 26px; }
+
+.panel { border: 1px solid var(--ds-line); border-radius: var(--ds-r-lg); background: var(--ds-bg-2); padding: 30px; margin-bottom: 20px; }
+.panel-h { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; border-bottom: 1px solid var(--ds-line); padding-bottom: 12px; margin-bottom: 22px; flex-wrap: wrap; }
+.panel-h h3 { font-size: 19px; }
+.panel-h .src { font-family: var(--ds-font-mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ds-accent); }
+.row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.state-lab { font-family: var(--ds-font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--ds-ink-soft); display: block; margin-bottom: 8px; }
+.stack-item { display: flex; flex-direction: column; }
+
+pre { margin: 0; background: var(--ds-primary-deep); color: #E9E4DC; border-radius: var(--ds-r-md); padding: 22px 24px; overflow-x: auto; font-family: var(--ds-font-mono); font-size: 12.5px; line-height: 1.7; }
+pre .c { color: #9AA9B8; }
+pre .t { color: var(--ds-accent); }
+
+/* ── Components under test ─────────────────────────────────────────────── */
+.btn-primary:hover, .btn-primary.is-hover { background: var(--ds-primary-deep); transform: scale(1.04); }
+.btn-primary.is-active { transform: scale(.98); }
+.btn-phone:hover, .btn-phone.is-hover { border-color: var(--ds-primary); color: var(--ds-primary); transform: scale(1.04); }
+.btn.is-focus, .btn:focus-visible { outline: 0; box-shadow: 0 0 0 3px color-mix(in srgb, var(--ds-primary) 30%, transparent); }
+.btn[disabled] { opacity: .42; pointer-events: none; }
+
+.link-sweep:hover, .link-sweep.is-hover { background-size: 100% 100%; }
+
+.card:hover, .card.is-hover { transform: translateY(-4px); box-shadow: var(--ds-shadow-lift); }
+.card-overlay .ov { position: absolute; inset: auto 0 0 0; z-index: 2; padding: 22px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--ds-grid-gap); }
+.grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--ds-grid-gap); }
+.darkstage { background: var(--ds-primary-deep); border-radius: var(--ds-r-lg); padding: 30px; }
+
+.field input:focus + label, .field input:not(:placeholder-shown) + label, .field.is-float label { transform: translateY(-9px); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ds-primary); font-family: var(--ds-font-mono); }
+.field input:focus-visible, .field.is-focus input { outline: 0; border-color: var(--ds-primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ds-primary) 20%, transparent); }
+.field.is-error input { border-color: var(--ds-warning); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ds-warning) 18%, transparent); }
+.field.is-success input { border-color: var(--ds-success); }
+.field .msg { font-family: var(--ds-font-mono); font-size: 11px; margin-top: 6px; }
+.field.is-error .msg { color: var(--ds-warning); }
+.field.is-success .msg { color: var(--ds-success); }
+
+.chip chip--line { border: 1px solid var(--ds-line); color: var(--ds-ink-soft); background: var(--ds-bg-2); }
+
+.slot.is-hover { border-color: var(--ds-primary); color: var(--ds-primary); transform: scale(1.04); }
+.slot[aria-pressed="true"] { background: var(--ds-primary); border-color: var(--ds-primary); color: #fff; }
+.slot[disabled] { opacity: .36; text-decoration: line-through; cursor: not-allowed; }
+
+/* Radius + shadow specimens */
+.spec-row { display: flex; flex-wrap: wrap; gap: 24px; }
+.spec { text-align: center; }
+.spec .box { width: 92px; height: 92px; background: var(--ds-primary); margin-bottom: 9px; }
+.spec .box.sm { border-radius: var(--ds-r-sm); } .spec .box.md { border-radius: var(--ds-r-md); }
+.spec .box.lg { border-radius: var(--ds-r-lg); } .spec .box.xl { border-radius: var(--ds-r-xl); }
+.spec .box.pill { border-radius: var(--ds-r-pill); }
+.spec .box.sh-card { background: var(--ds-bg-2); box-shadow: var(--ds-shadow-card); }
+.spec .box.sh-lift { background: var(--ds-bg-2); box-shadow: var(--ds-shadow-lift); }
+.spec .box.sh-nav  { background: var(--ds-bg-2); box-shadow: var(--ds-shadow-nav); }
+.spec .cap { font-family: var(--ds-font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--ds-ink-soft); }
+
+/* Motion stage */
+.motion-tbl { width: 100%; border-collapse: collapse; }
+.motion-tbl th, .motion-tbl td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--ds-line); font-size: 14px; vertical-align: top; }
+.motion-tbl th { font-family: var(--ds-font-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--ds-accent); width: 22%; }
+.motion-tbl td code { font-size: 12px; color: var(--ds-primary); }
+.stage { background: var(--ds-bg); border: 1px dashed var(--ds-line); border-radius: var(--ds-r-md); padding: 34px; display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; margin-top: 16px; }
+
+/* Nav + drawer specimens */
+.navspec { border: 1px solid var(--ds-line); border-radius: var(--ds-r-lg); overflow: hidden; background: var(--ds-bg-2); }
+.navbar { display: flex; align-items: center; gap: 24px; padding: 16px 24px; }
+.navbar .brand { display: inline-flex; align-items: center; gap: 10px; margin-right: auto; }
+.navbar .wm { font-family: var(--ds-font-display); font-weight: 600; font-size: 19px; letter-spacing: -.025em; }
+.navbar .wm em { font-style: normal; color: var(--ds-primary); }
+.navbar ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; }
+.navbar a { position: relative; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--ds-ink); padding-bottom: 5px; }
+.navbar a[aria-current] { }
+.navbar a[aria-current]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--ds-accent); }
+.navbar .acts { display: flex; gap: 10px; }
+.navbar .btn { padding: 10px 20px; font-size: 13px; }
+.navbar .btn-phone { padding: 8.5px 16px; font-size: 12px; }
+.drawer-spec { position: relative; width: 290px; height: 430px; background: var(--ds-primary); border-radius: var(--ds-r-lg); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.drawer-spec .x { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border: 1px solid rgba(251,247,241,.32); border-radius: var(--ds-r-sm); background: transparent; color: var(--ds-ink-on-dark); font-size: 17px; cursor: pointer; }
+.drawer-spec ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; text-align: center; }
+.drawer-spec a { font-family: var(--ds-font-display); font-size: 20px; font-weight: 500; text-decoration: none; color: var(--ds-ink-on-dark); padding-bottom: 4px; }
+.drawer-spec a[aria-current] { color: var(--ds-accent); border-bottom: 2px solid var(--ds-accent); }
+.sticky-spec { display: flex; gap: 10px; padding: 12px 16px; background: var(--ds-bg-2); border-top: 1px solid var(--ds-line); box-shadow: 0 -6px 22px -8px rgba(40,39,37,.18); border-radius: 0 0 var(--ds-r-lg) var(--ds-r-lg); }
+.sticky-spec .btn { flex: 1; padding-block: 14px; } .sticky-spec .btn-primary { flex-grow: 1.6; }
+/* 375 is the narrowest supported viewport, so the specimen frame renders at that
+   width — at 300px the two-button bar clipped the "Call" pill and misrepresented
+   what actually ships. */
+.phoneframe { width: 375px; max-width: 100%; border: 1px solid var(--ds-line); border-radius: var(--ds-r-lg); overflow: hidden; background: var(--ds-bg); }
+.phoneframe .filler { height: 200px; background: linear-gradient(var(--ds-bg), var(--ds-bg-surface-2)); display: flex; align-items: center; justify-content: center; font-family: var(--ds-font-mono); font-size: 11px; color: var(--ds-ink-soft); letter-spacing: .12em; }
+
+/* Rhythm reference */
+.rhy { border: 1px solid var(--ds-line); border-radius: var(--ds-r-lg); overflow: hidden; }
+.rhy-row { display: grid; grid-template-columns: 44px 1fr 190px 150px; gap: 16px; align-items: center; padding: 15px 20px; min-height: 62px; font-size: 14px; }
+.rhy-row .i { font-family: var(--ds-font-mono); font-size: 15px; font-weight: 500; opacity: .55; }
+.rhy-row .meta { font-family: var(--ds-font-mono); font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase; opacity: .72; }
+.rhy-row[data-bg="dark"]   { background: var(--ds-primary-deep); color: var(--ds-ink-on-dark); }
+.rhy-row[data-bg="light"]  { background: var(--ds-bg-2); }
+.rhy-row[data-bg="warm"]   { background: var(--ds-bg); }
+.rhy-row[data-bg="accent"] { background: var(--ds-accent-soft); }
+.rhy-chip { height: 34px; border-radius: var(--ds-r-sm); }
+.rhy-row[data-chrome="shadow-lift"] .rhy-chip { background: var(--ds-bg-2); box-shadow: var(--ds-shadow-card); }
+.rhy-row[data-chrome="hairline-card"] .rhy-chip { border: 1px solid currentColor; opacity: .45; }
+.rhy-row[data-chrome="dark-anchor-panel"] .rhy-chip { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22); }
+.rhy-row[data-chrome="image-overlay"] .rhy-chip { background: linear-gradient(120deg, var(--ds-primary), var(--ds-accent)); }
+.rhy-row[data-chrome="open-layout"] .rhy-chip { border: 1px dashed currentColor; opacity: .3; }
+
+.foot { border-top: 1px solid var(--ds-line); margin-top: 24px; padding-top: 26px; display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; font-family: var(--ds-font-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ds-ink-soft); }
+
+@media (max-width: 1024px) { .grid3 { grid-template-columns: repeat(2,1fr); } .rhy-row { grid-template-columns: 36px 1fr 150px; } .rhy-row .rhy-chip { display: none; } }
+@media (max-width: 768px)  { .page { padding: 0 24px 88px; } .masthead-in { padding: 42px 24px; } .panel { padding: 24px; } .grid2 { grid-template-columns: 1fr; } .navbar ul, .navbar .btn-phone { display: none; } }
+@media (max-width: 560px)  { .page { padding: 0 20px 72px; } .grid3 { grid-template-columns: 1fr; } .rhy-row { grid-template-columns: 30px 1fr; } .rhy-row .meta { display: none; } }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-in">
+    <p class="tag">Design system &middot; implementation contract</p>
+    <h1>ChiroPro design system</h1>
+    <p>Every page of this site links <code>design-system/tokens.css</code> and reuses the header, footer and components below. Identity, palette rationale and voice live in <a href="brand-card.html" style="color:var(--ds-accent)">brand-card.html</a> — this page is implementation only.</p>
+  </div>
+</header>
+
+<div class="page">
+
+  <!-- §1 Tokens -->
+  <section class="sec">
+    <div class="sec-h"><span class="n">§1</span><h2>Tokens</h2><span class="note">design-system/tokens.css &middot; flat --ds-* per BRAND-TOKEN-SCHEMA</span></div>
+    <p class="blurb">The full <code>:root</code> block. Values trace to <code>verticals/chiropro.md §4.bundles.C</code>. No page in this site may use a literal hex — every surface reads a token, which is what lets one structural stylesheet skin the whole brand.</p>
+    <pre><span class="c">/* Color */</span>
+<span class="t">--ds-primary</span>: #52708C;        <span class="t">--ds-accent</span>:       #C2A878;
+<span class="t">--ds-primary-deep</span>: #24384B;   <span class="t">--ds-accent-soft</span>:  #ECDCCD;
+<span class="t">--ds-primary-soft</span>: #DCE5EE;   <span class="t">--ds-signature</span>:    #D6DEBA;
+<span class="t">--ds-bg-surface</span>: #FCF4E9;     <span class="t">--ds-ink</span>:          #282725;
+<span class="t">--ds-bg-surface-2</span>: #FFFFFF;   <span class="t">--ds-ink-soft</span>:     #6E6A64;
+<span class="t">--ds-bg-warm</span>: #F6EADC;        <span class="t">--ds-line</span>:         #E6DDD1;
+<span class="t">--ds-ink-on-dark</span>: #FBF7F1;    <span class="t">--ds-scrim</span>:  rgba(36,56,75,.72);
+<span class="t">--ds-warning</span>: #A85D4E;        <span class="t">--ds-success</span>:      #5F7F62;
+<span class="c">/* short aliases so the H9 rhythm classifier and the schema agree */</span>
+<span class="t">--ds-bg</span>: var(--ds-bg-surface);  <span class="t">--ds-bg-2</span>: var(--ds-bg-surface-2);
+
+<span class="c">/* Type */</span>
+<span class="t">--ds-font-display</span>: 'Lexend', system-ui, sans-serif;
+<span class="t">--ds-font-body</span>:    'Inter', system-ui, sans-serif;
+<span class="t">--ds-font-mono</span>:    'JetBrains Mono', ui-monospace, monospace;
+
+<span class="c">/* Radius · SURFACE #3 Modern 8-12px */</span>
+<span class="t">--ds-r-sm</span>: 8px;  <span class="t">--ds-r-md</span>: 12px;  <span class="t">--ds-r-lg</span>: 16px;  <span class="t">--ds-r-xl</span>: 24px;  <span class="t">--ds-r-pill</span>: 999px;
+
+<span class="c">/* Shadow · SURFACE #11 Deep-shadow-floating, palette-toned alpha */</span>
+<span class="t">--ds-shadow-card</span>: 0 10px 25px -5px rgba(40,39,37,.10), 0 8px 10px -6px rgba(40,39,37,.05);
+<span class="t">--ds-shadow-lift</span>: 0 18px 38px -8px rgba(40,39,37,.16), 0 10px 14px -8px rgba(40,39,37,.07);
+
+<span class="c">/* Layout · audit §5.2 / §5.3 — step down at 1024 / 768 / 480 */</span>
+<span class="t">--ds-section-py</span>: 96px;  <span class="t">--ds-container-max</span>: 1340px;  <span class="t">--ds-container-pad</span>: 32px;
+
+<span class="c">/* Motion */</span>
+<span class="t">--ds-ease</span>: cubic-bezier(.65,0,.35,1);  <span class="t">--ds-dur</span>: 220ms;  <span class="t">--ds-dur-fast</span>: 160ms;</pre>
+  </section>
+
+  <!-- §2 Header + drawer -->
+  <section class="sec">
+    <div class="sec-h"><span class="n">§2</span><h2>Header, drawer &amp; sticky CTA</h2><span class="note">NAV-PATTERNS #3 &middot; STICKY-CTA-BAR #2</span></div>
+    <p class="blurb">Links are pushed right, not centred — that is the pattern. The active link carries a champagne underline. The phone pill sits at the far right of the cluster and, per the pattern's own drawer behaviour, deliberately does <em>not</em> reappear inside the drawer; the mobile sticky bar carries the call action instead.</p>
+    <div class="panel">
+      <div class="panel-h"><h3>Desktop bar &mdash; 1440 / 1024</h3><span class="src">NAV #3</span></div>
+      <div class="navspec">
+        <div class="navbar">
+          <div class="brand">
+            <svg width="26" height="30" viewBox="0 0 30 34" fill="none" aria-hidden="true"><path d="M15 2c4 0 6 2.2 6 4.4s-2.4 3-6 3-6-.8-6-3S11 2 15 2Z" fill="var(--ds-primary)"/><path d="M15 11c4.4 0 6.6 2.2 6.6 4.3s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 11 15 11Z" fill="var(--ds-primary)" opacity=".82"/><path d="M15 20c4.4 0 6.6 2.1 6.6 4.2s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 20 15 20Z" fill="var(--ds-primary)" opacity=".62"/><path d="M15 28.6c3 0 4.6 1.4 4.6 2.6S17.6 33 15 33s-4.6-.6-4.6-1.8 1.6-2.6 4.6-2.6Z" fill="var(--ds-accent)"/></svg>
+            <span class="wm">Chiro<em>Pro</em></span>
+          </div>
+          <ul><li><a href="#" aria-current="page">Home</a></li><li><a href="#">Services</a></li><li><a href="#">About us</a></li><li><a href="#">Locations</a></li><li><a href="#">Contact</a></li></ul>
+          <div class="acts"><a class="btn btn-phone" href="#">(555) 012-8840</a><a class="btn btn-primary" href="#">Book an appointment</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="panel">
+        <div class="panel-h"><h3>Drawer &mdash; open state</h3><span class="src">slide-from-right &middot; 290px</span></div>
+        <div class="drawer-spec">
+          <button class="x" aria-label="Close">&#10005;</button>
+          <ul><li><a href="#" aria-current="page">Home</a></li><li><a href="#">Services</a></li><li><a href="#">About us</a></li><li><a href="#">Locations</a></li><li><a href="#">Contact</a></li></ul>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-h"><h3>Sticky CTA &mdash; 768 &amp; below</h3><span class="src">STICKY #2 Book + Call</span></div>
+        <div class="phoneframe">
+          <div class="filler">PAGE CONTENT</div>
+          <div class="sticky-spec"><a class="btn btn-primary" href="#">Book an appointment</a><a class="btn btn-phone" href="#">Call</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §3 Buttons -->
+  <section class="sec">
+    <div class="sec-h"><span class="n">§3</span><h2>Buttons &mdash; every state</h2><span class="note">SURFACE #18 &middot; CTA #4 &middot; MOTION #5</span></div>
+    <div class="panel">
+      <div class="panel-h"><h3>Primary &mdash; solid pill</h3><span class="src">scale 1.04 hover &middot; 0.98 active</span></div>
+      <div class="row">
+        <div class="stack-item"><span class="state-lab">Default</span><a class="btn btn-primary" href="#">Book an appointment</a></div>
+        <div class="stack-item"><span class="state-lab">Hover</span><a class="btn btn-primary is-hover" href="#">Book an appointment</a></div>
+        <div class="stack-item"><span class="state-lab">Active</span><a class="btn btn-primary is-active" href="#">Book an appointment</a></div>
+        <div class="stack-item"><span class="state-lab">Focus-visible</span><a class="btn btn-primary is-focus" href="#">Book an appointment</a></div>
+        <div class="stack-item"><span class="state-lab">Disabled</span><a class="btn btn-primary" href="#" disabled>Book an appointment</a></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-h"><h3>Phone pill &mdash; the number is the button</h3><span class="src">CTA-PATTERNS #4</span></div>
+      <div class="row">
+        <div class="stack-item"><span class="state-lab">Default</span><a class="btn btn-phone" href="#">(555) 012-8840</a></div>
+        <div class="stack-item"><span class="state-lab">Hover</span><a class="btn btn-phone is-hover" href="#">(555) 012-8840</a></div>
+        <div class="stack-item"><span class="state-lab">Focus-visible</span><a class="btn btn-phone is-focus" href="#">(555) 012-8840</a></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-h"><h3>Text link &mdash; highlight sweep</h3><span class="src">MOTION #19</span></div>
+      <div class="row" style="gap:34px">
+        <div class="stack-item"><span class="state-lab">Default</span><a class="link-sweep" href="#">Clinic details</a></div>
+        <div class="stack-item"><span class="state-lab">Hover</span><a class="link-sweep is-hover" href="#">Clinic details</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §4 Cards -->
+  <section class="sec">
+    <div class="sec-h"><span class="n">§4</span><h2>Cards</h2><span class="note">SURFACE #11 &middot; CARD #13 &middot; MOTION #10</span></div>
+    <div class="grid3" style="margin-bottom:20px">
+      <div class="card"><span class="state-lab">Floating &middot; default</span><h3 style="font-size:19px">Dr Amara Whitfield</h3><p style="font-size:14.5px;color:var(--ds-ink-soft);margin-top:8px">Twelve years in practice, most of it with desk-based lower-back complaints.</p></div>
+      <div class="card is-hover"><span class="state-lab">Floating &middot; hover (lift 4px)</span><h3 style="font-size:19px">Dr Tom Okonkwo</h3><p style="font-size:14.5px;color:var(--ds-ink-soft);margin-top:8px">Eighteen years, with a sports and lifting caseload.</p></div>
+      <div class="card-hairline"><span class="state-lab">Hairline &middot; FAQ + testimonial</span><h3 style="font-size:19px">Does an adjustment hurt?</h3><p style="font-size:14.5px;color:var(--ds-ink-soft);margin-top:8px">Usually not. Most people describe it as a quick pressure and then a release.</p></div>
+    </div>
+    <div class="grid2">
+      <div class="card-overlay"><img src="assets/cond-neck.jpg" alt="A person working at a laptop beside a window"><div class="ov"><span class="mono" style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ds-accent)">02</span><h3 style="color:#fff;font-size:23px;margin-top:5px">Neck pain &amp; desk strain</h3></div></div>
+      <div class="darkstage"><span class="state-lab" style="color:rgba(251,247,241,.6)">Dark anchor panel &mdash; on --ds-primary-deep</span><div class="card-dark-panel"><span class="mono" style="font-size:11px;letter-spacing:.16em;color:var(--ds-accent)">02</span><h3 style="color:var(--ds-ink-on-dark);font-size:19px;margin-top:12px">Physical assessment</h3><p style="font-size:14.5px;color:rgba(251,247,241,.76);margin-top:8px">Movement and range testing, plus orthopaedic and neurological tests.</p></div></div>
+    </div>
+  </section>
+
+  <!-- §5 Forms -->
+  <section class="sec">
+    <div class="sec-h"><span class="n">§5</span><h2>Form fields &mdash; every state</h2><span class="note">SURFACE #41 floating label &middot; FORM-LAYOUTS #8</span></div>
+    <div class="panel">
+      <div class="grid3">
+        <div><span class="state-lab">Empty</span><div class="field"><input type="text" placeholder=" "><label>Full name</label></div></div>
+        <div><span class="state-lab">Filled &middot; label floated</span><div class="field is-float"><input type="text" placeholder=" " value="Marcus Delaney"><label>Full name</label></div></div>
+        <div><span class="state-lab">Focus-visible</span><div class="field is-float is-focus"><input type="text" placeholder=" " value="marcus@example.com"><label>Email</label></div></div>
+        <div><span class="state-lab">Error</span><div class="field is-float is-error"><input type="text" placeholder=" " value="555"><label>Phone</label><p class="msg">Enter a 10-digit number</p></div></div>
+        <div><span class="state-lab">Success</span><div class="field is-float is-success"><input type="text" placeholder=" " value="(555) 012-8840"><label>Phone</label><p class="msg">Looks good</p></div></div>
+        <div><span class="state-lab">Select</span><div class="field is-float"><select><option>Riverside</option></select><label>Clinic</label></div></div>
+      </div>
+      <span class="state-lab" style="margin-top:20px">Time slots &mdash; default / hover / selected / unavailable</span>
+      <div class="row">
+        <button class="slot" aria-pressed="false">08:00</button>
+        <button class="slot is-hover" aria-pressed="false">08:40</button>
+        <button class="slot" aria-pressed="true">10:00</button>
+        <button class="slot" disabled>10:40</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- §6 Badges + surfaces -->
+  <section class="sec">
+    <div class="sec-h"><span class="n">§6</span><h2>Badges, radii &amp; shadows</h2><span class="note">SURFACE #3 corner scale</span></div>
+    <div class="panel">
+      <div class="panel-h"><h3>Badges</h3><span class="src">mono, pill</span></div>
+      <div class="row"><span class="chip chip">Most common</span><span class="chip chip--accent">$89 first visit</span><span class="chip chip--sage">about 15 min</span><span class="chip chip chip--line">Aetna</span></div>
+    </div>
+    <div class="panel">
+      <div class="panel-h"><h3>Corner radius scale</h3><span class="src">8 / 12 / 16 / 24 / pill</span></div>
+      <div class="spec-row">
+        <div class="spec"><div class="box sm"></div><span class="cap">sm 8</span></div>
+        <div class="spec"><div class="box md"></div><span class="cap">md 12</span></div>
+        <div class="spec"><div class="box lg"></div><span class="cap">lg 16</span></div>
+        <div class="spec"><div class="box xl"></div><span class="cap">xl 24</span></div>
+        <div class="spec"><div class="box pill"></div><span class="cap">pill</span></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-h"><h3>Shadow scale</h3><span class="src">warm-ink alpha, never pure black</span></div>
+      <div class="spec-row">
+        <div class="spec"><div class="box sh-nav"></div><span class="cap">nav</span></div>
+        <div class="spec"><div class="box sh-card"></div><span class="cap">card</span></div>
+        <div class="spec"><div class="box sh-lift"></div><span class="cap">lift &middot; hover</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §7 Motion -->
+  <section class="sec">
+    <div class="sec-h"><span class="n">§7</span><h2>Motion &mdash; the locked picks, live</h2><span class="note">MOTION-PATTERNS, Bundle C</span></div>
+    <div class="panel">
+      <table class="motion-tbl">
+        <tr><th>Button hover</th><td><strong>#5 Scale-up</strong> &mdash; <code>scale(1.04)</code> hover, <code>scale(.98)</code> active, 160ms <code>--ds-ease-out</code></td></tr>
+        <tr><th>Card hover</th><td><strong>#10 Lift</strong> &mdash; <code>translateY(-4px)</code> + shadow-card &rarr; shadow-lift, 220ms</td></tr>
+        <tr><th>Link hover</th><td><strong>#19 Highlight-sweep</strong> &mdash; champagne sweeps <code>background-size 0% &rarr; 100%</code>, 320ms</td></tr>
+        <tr><th>Page entrance</th><td><strong>#24 Split-text reveal</strong> &mdash; per-word rise on the hero headline only, 55ms step</td></tr>
+        <tr><th>Scroll-triggered</th><td><strong>#29 Stagger-grid</strong> &mdash; native <code>animation-timeline: view()</code>, 60ms step, IntersectionObserver fallback</td></tr>
+        <tr><th>Cursor</th><td><strong>#35 Inverted-cursor</strong> &mdash; scoped to <code>.img-frame</code> only, <code>mix-blend-mode: difference</code>, off under <code>(hover: none)</code></td></tr>
+        <tr><th>Micro</th><td><strong>#39 Accordion</strong> &mdash; <code>grid-template-rows: 0fr &rarr; 1fr</code>, height-agnostic</td></tr>
+        <tr><th>Page transition</th><td><strong>#45 Mask-wipe</strong> &mdash; <code>clip-path</code> on the View Transitions API</td></tr>
+      </table>
+      <div class="stage">
+        <a class="btn btn-primary" href="#">Hover me</a>
+        <a class="btn btn-phone" href="#">(555) 012-8840</a>
+        <a class="link-sweep" href="#">Hover this link</a>
+        <div class="card" style="width:230px"><h3 style="font-size:17px">Hover this card</h3><p style="font-size:14px;color:var(--ds-ink-soft);margin-top:6px">Lifts 4px, shadow deepens.</p></div>
+      </div>
+      <p class="blurb" style="margin:18px 0 0">Every motion above is disabled wholesale by the <code>prefers-reduced-motion</code> block in tokens.css. Reduced motion is a system-level override here, not a per-component opt-out.</p>
+    </div>
+  </section>
+
+  <!-- §8 Rhythm -->
+  <section class="sec">
+    <div class="sec-h"><span class="n">§8</span><h2>Section rhythm reference</h2><span class="note">Rules every page must follow</span></div>
+    <p class="blurb">The homepage band order. Inner pages inherit these rules: at least 2 non-light anchors, at least 1 in the middle band, never 4 consecutive sections sharing a background, at least 50% carrying imagery, and never 4 consecutive hairline-card sections. Verify with <code>node design-system/verify-rhythm-local.mjs &lt;page&gt;</code>.</p>
+    <div class="rhy">
+      <div class="rhy-row" data-bg="dark"   data-chrome="shadow-lift"><span class="i">01</span><span>Hero</span><span class="meta">dark &middot; full-bleed photo</span><span class="rhy-chip"></span></div>
+      <div class="rhy-row" data-bg="light"  data-chrome="open-layout"><span class="i">02</span><span>Stat strip</span><span class="meta">light &middot; numerals are the visual</span><span class="rhy-chip"></span></div>
+      <div class="rhy-row" data-bg="warm"   data-chrome="image-overlay"><span class="i">03</span><span>Conditions we treat</span><span class="meta">warm &middot; inset photo</span><span class="rhy-chip"></span></div>
+      <div class="rhy-row" data-bg="dark"   data-chrome="dark-anchor-panel"><span class="i">04</span><span>Your first visit</span><span class="meta">dark &middot; contour illustration</span><span class="rhy-chip"></span></div>
+      <div class="rhy-row" data-bg="light"  data-chrome="shadow-lift"><span class="i">05</span><span>Your chiropractors</span><span class="meta">light &middot; circular portraits</span><span class="rhy-chip"></span></div>
+      <div class="rhy-row" data-bg="warm"   data-chrome="hairline-card"><span class="i">06</span><span>First visit &amp; insurance</span><span class="meta">warm &middot; price is the visual</span><span class="rhy-chip"></span></div>
+      <div class="rhy-row" data-bg="light"  data-chrome="hairline-card"><span class="i">07</span><span>Testimonials</span><span class="meta">light &middot; avatars</span><span class="rhy-chip"></span></div>
+      <div class="rhy-row" data-bg="accent" data-chrome="shadow-lift"><span class="i">08</span><span>Book your appointment</span><span class="meta">accent &middot; the conversion</span><span class="rhy-chip"></span></div>
+      <div class="rhy-row" data-bg="light"  data-chrome="image-overlay"><span class="i">09</span><span>Locations</span><span class="meta">light &middot; clinic photos</span><span class="rhy-chip"></span></div>
+      <div class="rhy-row" data-bg="warm"   data-chrome="hairline-card"><span class="i">10</span><span>FAQ</span><span class="meta">warm &middot; text Q&amp;A</span><span class="rhy-chip"></span></div>
+      <div class="rhy-row" data-bg="dark"   data-chrome="open-layout"><span class="i">11</span><span>Closing CTA</span><span class="meta">dark &middot; full-bleed photo</span><span class="rhy-chip"></span></div>
+    </div>
+  </section>
+
+  <!-- §9 Footer -->
+  <section class="sec">
+    <div class="sec-h"><span class="n">§9</span><h2>Footer</h2><span class="note">FOOTER-STYLES #13 Map-embedded local</span></div>
+    <p class="blurb">Half stylised map, half addresses and hours, then a bottom bar with nav, rating, licence line and legal. The map is hand-authored SVG using brand tokens rather than a third-party embed, so it recolours with the palette and costs nothing to load.</p>
+    <div class="panel" style="padding:0;overflow:hidden">
+      <div style="display:grid;grid-template-columns:1fr 1fr">
+        <div style="position:relative;min-height:230px;background:var(--ds-primary-soft)">
+          <svg viewBox="0 0 600 460" style="position:absolute;inset:0;width:100%;height:100%" role="img" aria-label="Stylised map">
+            <rect width="600" height="460" fill="var(--ds-primary-soft)"/>
+            <path d="M0 300 Q140 268 250 300 T600 286 L600 460 L0 460Z" fill="var(--ds-signature)" opacity=".42"/>
+            <g stroke="var(--ds-bg)" stroke-width="9" fill="none" stroke-linecap="round"><path d="M-10 120 H610"/><path d="M-10 236 H610"/><path d="M-10 356 H610"/><path d="M120 -10 V470"/><path d="M300 -10 V470"/><path d="M470 -10 V470"/></g>
+            <g fill="var(--ds-primary)"><circle cx="120" cy="178" r="16"/><circle cx="300" cy="120" r="16"/><circle cx="470" cy="296" r="16"/></g>
+            <g fill="var(--ds-accent)"><circle cx="120" cy="178" r="6"/><circle cx="300" cy="120" r="6"/><circle cx="470" cy="296" r="6"/></g>
+          </svg>
+        </div>
+        <div style="padding:30px">
+          <p class="mono" style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ds-primary);margin-bottom:16px">Visit us</p>
+          <p style="font-family:var(--ds-font-display);font-weight:600;font-size:17px">Riverside</p>
+          <p style="font-size:14.5px;color:var(--ds-ink-soft);margin-top:4px">118 Mill Row, Riverside, CA 92501</p>
+          <p class="mono" style="font-size:12px;color:var(--ds-ink-soft);margin-top:6px">Mon&ndash;Thu 7:30&ndash;19:00 &middot; Sat 8:00&ndash;13:00</p>
+          <div class="row" style="margin-top:22px"><a class="btn btn-primary" href="#">Book an appointment</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span>ChiroPro &middot; design system</span>
+    <span>Bundle C &middot; Warm Slate Calm</span>
+    <span>Inherited by every page</span>
+    <span>2026-08-07</span>
+  </div>
+</div>
+</body>
+</html>

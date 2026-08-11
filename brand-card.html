@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChiroPro — Brand card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="design-system/tokens.css">
+<style>
+/* =============================================================================
+ * ChiroPro — brand card (identity sheet)
+ * This is the BRAND: palette, type specimens, voice, logo lockups, applied
+ * mockup. Implementation lives in design-system.html, not here.
+ * Bundle C "Warm Slate Calm" — verticals/chiropro.md §4.bundles.C
+ * ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; font-family: var(--ds-font-body); font-size: 16px; line-height: 1.6; color: var(--ds-ink); background: var(--ds-bg); -webkit-font-smoothing: antialiased; }
+h1,h2,h3,h4 { font-family: var(--ds-font-display); font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; margin: 0; }
+p { margin: 0; }
+img { display: block; max-width: 100%; }
+
+.page { max-width: 1180px; margin: 0 auto; padding: 0 32px 120px; }
+.mono { font-family: var(--ds-font-mono); }
+
+.masthead { background: var(--ds-primary-deep); color: var(--ds-ink-on-dark); margin-bottom: 72px; }
+.masthead-in { max-width: 1180px; margin: 0 auto; padding: 56px 32px; display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; }
+.masthead h1 { font-size: clamp(38px, 5vw, 62px); }
+.masthead .sub { margin-top: 12px; color: rgba(251,247,241,.74); max-width: 54ch; }
+.masthead .tag { font-family: var(--ds-font-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--ds-accent); margin-bottom: 18px; }
+.pill-note { font-family: var(--ds-font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; padding: 9px 16px; border: 1px solid rgba(251,247,241,.34); border-radius: var(--ds-r-pill); color: rgba(251,247,241,.86); }
+
+.sec { margin-bottom: 84px; }
+.sec-h { display: flex; align-items: baseline; gap: 16px; border-bottom: 1px solid var(--ds-line); padding-bottom: 16px; margin-bottom: 32px; flex-wrap: wrap; }
+.sec-h .n { font-family: var(--ds-font-mono); font-size: 11px; letter-spacing: .2em; color: var(--ds-accent); }
+.sec-h h2 { font-size: 28px; }
+.sec-h .note { margin-left: auto; font-family: var(--ds-font-mono); font-size: 11px; color: var(--ds-ink-soft); letter-spacing: .06em; }
+
+/* Logo lockups */
+.lockups { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.lock { border: 1px solid var(--ds-line); border-radius: var(--ds-r-lg); padding: 34px 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; min-height: 190px; background: var(--ds-bg-2); }
+.lock.dark { background: var(--ds-primary-deep); border-color: transparent; }
+.lock.accent { background: var(--ds-accent-soft); border-color: transparent; }
+.lock .cap { font-family: var(--ds-font-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--ds-ink-soft); }
+.lock.dark .cap { color: rgba(251,247,241,.6); }
+.wordmark { font-family: var(--ds-font-display); font-weight: 600; font-size: 27px; letter-spacing: -.03em; color: var(--ds-ink); }
+.wordmark em { font-style: normal; color: var(--ds-primary); }
+.lock.dark .wordmark { color: var(--ds-ink-on-dark); }
+.lock.dark .wordmark em { color: var(--ds-accent); }
+.lockup-row { display: flex; align-items: center; gap: 12px; }
+.stack { flex-direction: column; gap: 10px; }
+
+/* Palette */
+.swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.sw { border: 1px solid var(--ds-line); border-radius: var(--ds-r-md); overflow: hidden; background: var(--ds-bg-2); }
+.sw .chip { height: 104px; border-bottom: 1px solid var(--ds-line); }
+.sw .meta { padding: 14px 16px 18px; }
+.sw .nm { font-family: var(--ds-font-display); font-weight: 600; font-size: 15px; }
+.sw .hex { font-family: var(--ds-font-mono); font-size: 11px; color: var(--ds-ink-soft); margin-top: 4px; letter-spacing: .05em; }
+.sw .use { font-size: 12.5px; color: var(--ds-ink-soft); margin-top: 7px; line-height: 1.45; }
+.sw .src { font-family: var(--ds-font-mono); font-size: 10px; color: var(--ds-accent); margin-top: 8px; letter-spacing: .04em; }
+
+/* Type */
+.type-card { border: 1px solid var(--ds-line); border-radius: var(--ds-r-lg); background: var(--ds-bg-2); padding: 40px 36px; }
+.type-row { padding: 22px 0; border-bottom: 1px solid var(--ds-line); }
+.type-row:last-child { border-bottom: 0; }
+.ann { display: block; font-family: var(--ds-font-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--ds-accent); margin-bottom: 12px; }
+.d1 { font-family: var(--ds-font-display); font-weight: 600; font-size: clamp(38px,5vw,62px); letter-spacing: -.035em; line-height: 1.04; }
+.d2 { font-family: var(--ds-font-display); font-weight: 600; font-size: 40px; letter-spacing: -.025em; }
+.d3 { font-family: var(--ds-font-display); font-weight: 500; font-size: 26px; }
+.b1 { font-family: var(--ds-font-body); font-weight: 600; font-size: 18px; }
+.b2 { font-family: var(--ds-font-body); font-weight: 400; font-size: 18px; max-width: 62ch; }
+.b3 { font-family: var(--ds-font-body); font-weight: 400; font-size: 14px; color: var(--ds-ink-soft); max-width: 62ch; }
+.m1 { font-family: var(--ds-font-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--ds-ink-soft); }
+.scale-strip { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.scale-strip span { font-family: var(--ds-font-mono); font-size: 11px; padding: 7px 12px; border: 1px solid var(--ds-line); border-radius: var(--ds-r-pill); color: var(--ds-ink-soft); }
+
+/* Voice */
+.voice { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.vcard { border: 1px solid var(--ds-line); border-radius: var(--ds-r-lg); background: var(--ds-bg-2); padding: 30px 32px; border-top: 4px solid var(--ds-accent); }
+.vcard.never { border-top-color: var(--ds-warning); }
+.vcard h3 { font-family: var(--ds-font-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--ds-accent); margin-bottom: 20px; }
+.vcard.never h3 { color: var(--ds-warning); }
+.vcard ul { list-style: none; margin: 0; padding: 0; }
+.vcard li { font-family: var(--ds-font-display); font-size: 17px; font-weight: 400; line-height: 1.45; padding: 12px 0; border-bottom: 1px solid var(--ds-line); }
+.vcard li:last-child { border-bottom: 0; }
+.vcard.never li { color: var(--ds-ink-soft); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--ds-warning) 55%, transparent); }
+.desc-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.desc-row span { font-family: var(--ds-font-mono); font-size: 11px; letter-spacing: .08em; padding: 8px 14px; border-radius: var(--ds-r-pill); background: var(--ds-primary-soft); color: var(--ds-primary-deep); }
+
+/* Taglines */
+.taglines { display: grid; gap: 14px; }
+.tl { border: 1px solid var(--ds-line); border-radius: var(--ds-r-md); background: var(--ds-bg-2); padding: 22px 26px; display: flex; gap: 22px; align-items: baseline; flex-wrap: wrap; }
+.tl .k { font-family: var(--ds-font-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--ds-accent); min-width: 92px; }
+.tl .v { font-family: var(--ds-font-display); font-size: 22px; font-weight: 500; flex: 1; min-width: 240px; }
+.tl.primary { background: var(--ds-primary-deep); border-color: transparent; }
+.tl.primary .v { color: var(--ds-ink-on-dark); }
+
+/* Applied mockup */
+.applied { display: grid; grid-template-columns: 1.25fr 1fr; gap: 24px; }
+.card-mock { border-radius: var(--ds-r-lg); overflow: hidden; box-shadow: var(--ds-shadow-card); background: var(--ds-bg-2); }
+.card-mock .photo { position: relative; aspect-ratio: 16/10; }
+.card-mock .photo img { width: 100%; height: 100%; object-fit: cover; }
+.card-mock .photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, var(--ds-scrim) 100%); }
+.card-mock .over { position: absolute; inset: auto 0 0 0; padding: 26px; z-index: 2; color: #fff; }
+.card-mock .over .eb { font-family: var(--ds-font-mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--ds-accent); }
+.card-mock .over h3 { font-size: 25px; margin-top: 6px; color: #fff; }
+.card-mock .body { padding: 26px; }
+.mini-stack { display: grid; gap: 18px; }
+.mini { border: 1px solid var(--ds-line); border-radius: var(--ds-r-lg); background: var(--ds-bg-2); padding: 24px; }
+.mini .lab { font-family: var(--ds-font-mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--ds-ink-soft); margin-bottom: 12px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 14px 28px; border: 0; border-radius: var(--ds-r-pill); font-family: var(--ds-font-body); font-size: 15px; font-weight: 600; text-decoration: none; cursor: pointer; transition: transform var(--ds-dur-fast) var(--ds-ease-out), background-color var(--ds-dur-fast) ease; }
+.btn--primary { background: var(--ds-primary); color: #fff; }
+.btn--primary:hover { transform: scale(1.04); background: var(--ds-primary-deep); }
+.btn--phone { background: transparent; color: var(--ds-ink); border: 1.5px solid var(--ds-ink); padding: 12.5px 24px; font-family: var(--ds-font-mono); font-weight: 500; }
+.btn--phone:hover { transform: scale(1.04); border-color: var(--ds-primary); color: var(--ds-primary); }
+.btnrow { display: flex; gap: 12px; flex-wrap: wrap; }
+.portrait-mini { display: flex; align-items: center; gap: 16px; }
+.portrait-mini img { width: 72px; height: 72px; border-radius: var(--ds-r-pill); object-fit: cover; }
+
+.foot { border-top: 1px solid var(--ds-line); margin-top: 24px; padding-top: 26px; display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; font-family: var(--ds-font-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ds-ink-soft); }
+
+@media (max-width: 1024px) { .lockups, .swatches { grid-template-columns: repeat(2, 1fr); } .applied { grid-template-columns: 1fr; } }
+@media (max-width: 768px)  { .voice { grid-template-columns: 1fr; } .page { padding: 0 24px 88px; } .masthead-in { padding: 44px 24px; } .type-card { padding: 28px 24px; } }
+@media (max-width: 480px)  { .lockups, .swatches { grid-template-columns: 1fr; } .page { padding: 0 20px 72px; } .d2 { font-size: 30px; } .tl { flex-direction: column; gap: 8px; } }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-in">
+    <div>
+      <p class="tag">Brand card &middot; Bundle C locked 2026-08-07</p>
+      <h1>ChiroPro</h1>
+      <p class="sub">Chiropractic clinic, three locations. The brand is built for the patient who has never seen a chiropractor, is not sure it is real medicine, and is quietly worried it will hurt.</p>
+    </div>
+    <div class="pill-note">Warm Slate Calm</div>
+  </div>
+</header>
+
+<div class="page">
+
+  <!-- §1 Logo lockups -->
+  <section class="sec">
+    <div class="sec-h"><span class="n">§1</span><h2>Logo lockups</h2><span class="note">Five-vertebra spine glyph &middot; inline SVG, no raster</span></div>
+    <div class="lockups">
+      <div class="lock">
+        <div class="lockup-row">
+          <svg width="30" height="34" viewBox="0 0 30 34" fill="none" aria-hidden="true">
+            <path d="M15 2c4 0 6 2.2 6 4.4s-2.4 3-6 3-6-.8-6-3S11 2 15 2Z" fill="var(--ds-primary)"/>
+            <path d="M15 11c4.4 0 6.6 2.2 6.6 4.3s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 11 15 11Z" fill="var(--ds-primary)" opacity=".82"/>
+            <path d="M15 20c4.4 0 6.6 2.1 6.6 4.2s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 20 15 20Z" fill="var(--ds-primary)" opacity=".62"/>
+            <path d="M15 28.6c3 0 4.6 1.4 4.6 2.6S17.6 33 15 33s-4.6-.6-4.6-1.8 1.6-2.6 4.6-2.6Z" fill="var(--ds-accent)"/>
+          </svg>
+          <span class="wordmark">Chiro<em>Pro</em></span>
+        </div>
+        <span class="cap">Primary &middot; horizontal</span>
+      </div>
+      <div class="lock">
+        <div class="lockup-row stack">
+          <svg width="38" height="43" viewBox="0 0 30 34" fill="none" aria-hidden="true">
+            <path d="M15 2c4 0 6 2.2 6 4.4s-2.4 3-6 3-6-.8-6-3S11 2 15 2Z" fill="var(--ds-primary)"/>
+            <path d="M15 11c4.4 0 6.6 2.2 6.6 4.3s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 11 15 11Z" fill="var(--ds-primary)" opacity=".82"/>
+            <path d="M15 20c4.4 0 6.6 2.1 6.6 4.2s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 20 15 20Z" fill="var(--ds-primary)" opacity=".62"/>
+            <path d="M15 28.6c3 0 4.6 1.4 4.6 2.6S17.6 33 15 33s-4.6-.6-4.6-1.8 1.6-2.6 4.6-2.6Z" fill="var(--ds-accent)"/>
+          </svg>
+          <span class="wordmark" style="font-size:22px">Chiro<em>Pro</em></span>
+        </div>
+        <span class="cap">Stacked &middot; square placements</span>
+      </div>
+      <div class="lock dark">
+        <div class="lockup-row">
+          <svg width="30" height="34" viewBox="0 0 30 34" fill="none" aria-hidden="true">
+            <path d="M15 2c4 0 6 2.2 6 4.4s-2.4 3-6 3-6-.8-6-3S11 2 15 2Z" fill="#FBF7F1"/>
+            <path d="M15 11c4.4 0 6.6 2.2 6.6 4.3s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 11 15 11Z" fill="#FBF7F1" opacity=".8"/>
+            <path d="M15 20c4.4 0 6.6 2.1 6.6 4.2s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 20 15 20Z" fill="#FBF7F1" opacity=".58"/>
+            <path d="M15 28.6c3 0 4.6 1.4 4.6 2.6S17.6 33 15 33s-4.6-.6-4.6-1.8 1.6-2.6 4.6-2.6Z" fill="var(--ds-accent)"/>
+          </svg>
+          <span class="wordmark">Chiro<em>Pro</em></span>
+        </div>
+        <span class="cap">Reversed &middot; dark surfaces</span>
+      </div>
+      <div class="lock accent">
+        <svg width="46" height="52" viewBox="0 0 30 34" fill="none" aria-hidden="true">
+          <path d="M15 2c4 0 6 2.2 6 4.4s-2.4 3-6 3-6-.8-6-3S11 2 15 2Z" fill="var(--ds-primary-deep)"/>
+          <path d="M15 11c4.4 0 6.6 2.2 6.6 4.3s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 11 15 11Z" fill="var(--ds-primary-deep)" opacity=".8"/>
+          <path d="M15 20c4.4 0 6.6 2.1 6.6 4.2s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 20 15 20Z" fill="var(--ds-primary-deep)" opacity=".58"/>
+          <path d="M15 28.6c3 0 4.6 1.4 4.6 2.6S17.6 33 15 33s-4.6-.6-4.6-1.8 1.6-2.6 4.6-2.6Z" fill="var(--ds-primary)"/>
+        </svg>
+        <span class="cap">Glyph only &middot; favicon, app icon</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- §2 Palette -->
+  <section class="sec">
+    <div class="sec-h"><span class="n">§2</span><h2>Palette</h2><span class="note">COLOR-THEORY-PRESETS #55, tuned to observed reference values</span></div>
+    <div class="swatches">
+      <div class="sw"><div class="chip" style="background:var(--ds-primary)"></div><div class="meta"><p class="nm">Slate</p><p class="hex">--ds-primary &middot; #52708C</p><p class="use">CTAs, links, primary brand surfaces</p><p class="src">deepened from catalog #6E8AA8 for 4.5:1 on cream</p></div></div>
+      <div class="sw"><div class="chip" style="background:var(--ds-primary-deep)"></div><div class="meta"><p class="nm">Deep slate</p><p class="hex">--ds-primary-deep &middot; #24384B</p><p class="use">Hero, dark bands, footer, scrim</p><p class="src">catalog-derived</p></div></div>
+      <div class="sw"><div class="chip" style="background:var(--ds-primary-soft)"></div><div class="meta"><p class="nm">Slate tint</p><p class="hex">--ds-primary-soft &middot; #DCE5EE</p><p class="use">Tinted panels, map base</p><p class="src">catalog-derived</p></div></div>
+      <div class="sw"><div class="chip" style="background:var(--ds-accent)"></div><div class="meta"><p class="nm">Champagne</p><p class="hex">--ds-accent &middot; #C2A878</p><p class="use">Eyebrows, arcs, hover, stars</p><p class="src">catalog #55 unchanged</p></div></div>
+      <div class="sw"><div class="chip" style="background:var(--ds-accent-soft)"></div><div class="meta"><p class="nm">Warm sand</p><p class="hex">--ds-accent-soft &middot; #ECDCCD</p><p class="use">Booking band, accent surfaces</p><p class="src">observed &mdash; asktia.com</p></div></div>
+      <div class="sw"><div class="chip" style="background:var(--ds-bg-surface)"></div><div class="meta"><p class="nm">Cream</p><p class="hex">--ds-bg-surface &middot; #FCF4E9</p><p class="use">Page background</p><p class="src">observed &mdash; asktia.com</p></div></div>
+      <div class="sw"><div class="chip" style="background:var(--ds-bg-surface-2); box-shadow: inset 0 0 0 1px var(--ds-line)"></div><div class="meta"><p class="nm">White</p><p class="hex">--ds-bg-surface-2 &middot; #FFFFFF</p><p class="use">Cards, elevated surfaces</p><p class="src">catalog #55 unchanged</p></div></div>
+      <div class="sw"><div class="chip" style="background:var(--ds-ink)"></div><div class="meta"><p class="nm">Warm ink</p><p class="hex">--ds-ink &middot; #282725</p><p class="use">All body text</p><p class="src">observed &mdash; asktia.com, 72 occurrences</p></div></div>
+      <div class="sw"><div class="chip" style="background:var(--ds-ink-soft)"></div><div class="meta"><p class="nm">Ink soft</p><p class="hex">--ds-ink-soft &middot; #6E6A64</p><p class="use">Secondary text, captions</p><p class="src">warm-grey tune</p></div></div>
+      <div class="sw"><div class="chip" style="background:var(--ds-line)"></div><div class="meta"><p class="nm">Line</p><p class="hex">--ds-line &middot; #E6DDD1</p><p class="use">Hairlines, card borders</p><p class="src">warm border tune</p></div></div>
+      <div class="sw"><div class="chip" style="background:var(--ds-signature)"></div><div class="meta"><p class="nm">Sage</p><p class="hex">--ds-signature &middot; #D6DEBA</p><p class="use">Badges, map land, step timings</p><p class="src">observed &mdash; asktia.com</p></div></div>
+      <div class="sw"><div class="chip" style="background:var(--ds-warning)"></div><div class="meta"><p class="nm">Clay</p><p class="hex">--ds-warning &middot; #A85D4E</p><p class="use">Urgent flags only &mdash; never decorative</p><p class="src">muted so it cannot read as brand</p></div></div>
+    </div>
+  </section>
+
+  <!-- §3 Typography -->
+  <section class="sec">
+    <div class="sec-h"><span class="n">§3</span><h2>Typography &mdash; Lexend + Inter</h2><span class="note">TYPOGRAPHY-PAIRINGS #8 &middot; JetBrains Mono for numerics</span></div>
+    <div class="type-card">
+      <div class="type-row"><span class="ann">Lexend 600 &middot; hero &middot; clamp(48&ndash;96px) &middot; -0.035em</span><p class="d1">Never seen a chiropractor? Start here.</p></div>
+      <div class="type-row"><span class="ann">Lexend 600 &middot; section h2 &middot; 40px</span><p class="d2">Forty-five minutes. No mystery, no pressure.</p></div>
+      <div class="type-row"><span class="ann">Lexend 500 &middot; card h3 &middot; 26px</span><p class="d3">A plan, with a number</p></div>
+      <div class="type-row"><span class="ann">Inter 600 &middot; button + emphasis &middot; 18px</span><p class="b1">Book an appointment</p></div>
+      <div class="type-row"><span class="ann">Inter 400 &middot; body &middot; 18px &mdash; one step up from the standard scale, per §5.6</span><p class="b2">We&rsquo;ll tell you what we&rsquo;re doing before we do it, show you the assessment, and give you a straight answer on how many visits it should take. Booking takes about ninety seconds.</p></div>
+      <div class="type-row"><span class="ann">Inter 400 &middot; caption &middot; 14px</span><p class="b3">Follow-up visits are $52. We will tell you at the end of the first visit roughly how many you are likely to need.</p></div>
+      <div class="type-row"><span class="ann">JetBrains Mono 500 &middot; eyebrow / numerals / times &middot; 12px &middot; 0.14em</span><p class="m1">Mon&ndash;Thu 7:30&ndash;19:00 &middot; (555) 012-8840 &middot; $89 first visit</p>
+        <div class="scale-strip"><span>hero 96/80/64/48</span><span>h2 56/48/40/32</span><span>h3 28/26/24/22</span><span>body 18/17/17/16</span><span>small 14/14/13/13</span><span>eyebrow 11</span><span>stat 72/64/52/40</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §4 Voice -->
+  <section class="sec">
+    <div class="sec-h"><span class="n">§4</span><h2>Voice</h2><span class="note">Descriptors shared across bundles; taglines tuned to C</span></div>
+    <div class="voice">
+      <div class="vcard">
+        <h3>Sounds like</h3>
+        <ul>
+          <li>We fix pain fast</li>
+          <li>No long treatment plans. No unnecessary procedures.</li>
+          <li>Care within days, not months</li>
+          <li>Getting care shouldn&rsquo;t feel complicated</li>
+          <li>New patient appointment includes: focused spinal exam</li>
+        </ul>
+      </div>
+      <div class="vcard never">
+        <h3>Never sounds like</h3>
+        <ul>
+          <li>Unlock your body&rsquo;s innate healing potential</li>
+          <li>Realign your energy and restore balance</li>
+          <li>Subluxation-free living starts here</li>
+          <li>The miracle cure your doctor won&rsquo;t tell you about</li>
+        </ul>
+      </div>
+    </div>
+    <div class="desc-row">
+      <span>plain-spoken</span><span>evidence-led</span><span>calm</span><span>unhurried</span><span>specific</span><span>warm-professional</span><span>non-alarmist</span>
+    </div>
+    <p class="b3" style="margin-top:22px">Sentence pattern: a short declarative claim, then one longer sentence that qualifies it with a number, a timeframe or a named technique. Specificity register is very-specific-named-thing &mdash; name the condition, the assessment, the visit count, the price. Never gesture at wellness in the abstract.</p>
+  </section>
+
+  <!-- §5 Taglines -->
+  <section class="sec">
+    <div class="sec-h"><span class="n">§5</span><h2>Taglines</h2><span class="note">Bundle C register</span></div>
+    <div class="taglines">
+      <div class="tl primary"><span class="k">Primary</span><span class="v">Never seen a chiropractor? Start here.</span></div>
+      <div class="tl"><span class="k">Alt &middot; ad</span><span class="v">We&rsquo;ll tell you what we&rsquo;re doing before we do it.</span></div>
+      <div class="tl"><span class="k">Alt &middot; local</span><span class="v">Book in ninety seconds. Ask us anything at the first visit.</span></div>
+      <div class="tl"><span class="k">Alt &middot; long</span><span class="v">Assessment, findings and a written plan with a visit count &mdash; on day one.</span></div>
+    </div>
+  </section>
+
+  <!-- §6 Applied -->
+  <section class="sec">
+    <div class="sec-h"><span class="n">§6</span><h2>Applied</h2><span class="note">The identity on real surfaces</span></div>
+    <div class="applied">
+      <div class="card-mock">
+        <div class="photo">
+          <img src="assets/cond-lower-back.jpg" alt="A person lifting a cardboard box from the floor in a bright hallway">
+          <div class="over"><span class="eb">01 &middot; Most common</span><h3>Lower back pain</h3></div>
+        </div>
+        <div class="body">
+          <p class="b3" style="margin-bottom:18px">CARD-VARIATIONS #13 category image-overlay tile, rendered in the locked palette. The champagne eyebrow and the scrim are the only chrome.</p>
+          <div class="btnrow"><a class="btn btn--primary" href="index.html">Book an appointment</a><a class="btn btn--phone" href="tel:+15550128840">(555) 012-8840</a></div>
+        </div>
+      </div>
+      <div class="mini-stack">
+        <div class="mini">
+          <p class="lab">Practitioner card &middot; circular mask</p>
+          <div class="portrait-mini">
+            <img src="assets/dr-1.jpg" alt="Dr Amara Whitfield">
+            <div><p style="font-family:var(--ds-font-display);font-weight:600;font-size:18px">Dr Amara Whitfield</p><p class="m1" style="margin-top:5px">DC &middot; Riverside</p></div>
+          </div>
+        </div>
+        <div class="mini">
+          <p class="lab">Stat treatment</p>
+          <p style="font-family:var(--ds-font-display);font-weight:600;font-size:56px;line-height:1;letter-spacing:-.04em;color:var(--ds-primary)">4.9<sup style="font-size:.4em;color:var(--ds-accent)">&#9733;</sup></p>
+          <p class="b3" style="margin-top:10px">Average Google rating across 1,284 reviews</p>
+        </div>
+        <div class="mini" style="background:var(--ds-accent-soft);border-color:transparent">
+          <p class="lab">Accent band</p>
+          <p style="font-family:var(--ds-font-display);font-size:21px;font-weight:500">$89 first visit &mdash; assessment, findings and a written plan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span>ChiroPro &middot; brand card</span>
+    <span>Bundle C &middot; Warm Slate Calm</span>
+    <span>Audit &middot; verticals/chiropro.md</span>
+    <span>2026-08-07</span>
+  </div>
+</div>
+</body>
+</html>

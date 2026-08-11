@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services — what we treat and how | ChiroPro</title>
+<meta name="description" content="Lower back pain, neck pain, sciatica, tension headaches, sports injury and everyday postural strain. What we assess, which techniques we use, and how many visits it usually takes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="design-system/tokens.css">
+<link rel="stylesheet" href="design-system/structural.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container site-nav">
+    <a class="brand" href="index.html" aria-label="ChiroPro home">
+      <svg class="brand-mark" viewBox="0 0 30 34" fill="none" aria-hidden="true">
+        <path d="M15 2c4 0 6 2.2 6 4.4s-2.4 3-6 3-6-.8-6-3S11 2 15 2Z" fill="var(--ds-primary)"/>
+        <path d="M15 11c4.4 0 6.6 2.2 6.6 4.3s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 11 15 11Z" fill="var(--ds-primary)" opacity=".82"/>
+        <path d="M15 20c4.4 0 6.6 2.1 6.6 4.2s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 20 15 20Z" fill="var(--ds-primary)" opacity=".62"/>
+        <path d="M15 28.6c3 0 4.6 1.4 4.6 2.6S17.6 33 15 33s-4.6-.6-4.6-1.8 1.6-2.6 4.6-2.6Z" fill="var(--ds-accent)"/>
+      </svg>
+      <span class="brand-word">Chiro<em>Pro</em></span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html" aria-current="page">Services</a></li>
+        <li><a href="about.html">About us</a></li>
+        <li><a href="locations.html">Locations</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-phone" href="tel:+15550128840">(555) 012-8840</a>
+      <a class="btn btn-primary" href="contact.html#book">Book an appointment</a>
+      <button class="hamburger" data-hamburger aria-expanded="false" aria-controls="drawer" aria-label="Open menu"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="drawer-backdrop" data-drawer-backdrop></div>
+<nav class="mobile-drawer" id="drawer" data-drawer aria-hidden="true" aria-label="Mobile">
+  <button class="drawer-close" data-drawer-close aria-label="Close menu">&#10005;</button>
+  <ul class="drawer-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html" aria-current="page">Services</a></li>
+    <li><a href="about.html">About us</a></li>
+    <li><a href="locations.html">Locations</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<main id="main">
+
+<!-- 01 · page hero — dark, photo -->
+<section class="section page-hero section--dark">
+  <div class="page-hero-bg"><img src="assets/conditions-inset.jpg" alt="A chiropractor sitting beside a seated patient, holding an anatomical spine model and pointing at one vertebra" fetchpriority="high" width="1024" height="768"></div>
+  <div class="container">
+    <p class="crumbs"><a class="link-sweep" href="index.html">Home</a> &nbsp;/&nbsp; Services</p>
+    <h1>What we treat, and what we actually do about it.</h1>
+    <p class="lede">Six complaints make up most of our caseload. For each one, here is what we assess, which techniques we use, and roughly how many visits it takes &mdash; because &ldquo;it depends&rdquo; is not an answer you can plan around.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="contact.html#book">Book an appointment</a>
+      <a class="btn btn-phone" href="tel:+15550128840">(555) 012-8840</a>
+    </div>
+  </div>
+</section>
+
+<!-- 02 · the six, with photos — light -->
+<section class="section section--light">
+  <div class="container">
+    <div class="slider-head">
+      <div class="section-head section-head--signed">
+        <p class="eyebrow">Jump to</p>
+        <h2>Six complaints, in order of how often we see them.</h2>
+      </div>
+      <div class="slider-nav">
+        <button class="slider-btn" type="button" data-slider-prev aria-label="Previous conditions">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="slider-btn" type="button" data-slider-next aria-label="More conditions">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="slider reveal" data-slider>
+      <div class="slider-track" tabindex="0" role="group" aria-label="The six complaints — scrollable list">
+        <a class="cond-tile img-frame" href="#lower-back">
+          <img src="assets/cond-lower-back.jpg" alt="A person lifting a cardboard box from the floor in a bright hallway" loading="lazy" width="900" height="675">
+          <div class="cond-body"><div><span class="cond-eyebrow">01</span><h3>Lower back pain</h3></div></div>
+        </a>
+        <a class="cond-tile img-frame" href="#neck">
+          <img src="assets/cond-neck.jpg" alt="A person working at a laptop at a wooden desk beside a window" loading="lazy" width="900" height="675">
+          <div class="cond-body"><div><span class="cond-eyebrow">02</span><h3>Neck pain &amp; desk strain</h3></div></div>
+        </a>
+        <a class="cond-tile img-frame" href="#sciatica">
+          <img src="assets/cond-sciatica.jpg" alt="A seated person holding their lower leg with both hands, just below the knee" loading="lazy" width="900" height="675">
+          <div class="cond-body"><div><span class="cond-eyebrow">03</span><h3>Sciatica &amp; nerve pain</h3></div></div>
+        </a>
+        <a class="cond-tile img-frame" href="#headaches">
+          <img src="assets/cond-headache.jpg" alt="A close view of a person pressing their fingertips against their brow and temples, eyes closed" loading="lazy" width="900" height="675">
+          <div class="cond-body"><div><span class="cond-eyebrow">04</span><h3>Tension headaches</h3></div></div>
+        </a>
+        <a class="cond-tile img-frame" href="#sports">
+          <img src="assets/cond-sports.jpg" alt="A runner crouching to retie a shoelace on a sunlit park path" loading="lazy" width="900" height="675">
+          <div class="cond-body"><div><span class="cond-eyebrow">05</span><h3>Sports &amp; running injuries</h3></div></div>
+        </a>
+        <a class="cond-tile img-frame" href="#posture">
+          <img src="assets/cond-posture.jpg" alt="A person carrying a young child on one hip while holding a bag" loading="lazy" width="900" height="675">
+          <div class="cond-body"><div><span class="cond-eyebrow">06</span><h3>Posture &amp; everyday strain</h3></div></div>
+        </a>
+      </div>
+      <div class="slider-rail" aria-hidden="true"><span data-slider-rail></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 · detail blocks — warm -->
+<section class="section section--warm">
+  <div class="container">
+    <div class="service-block" id="lower-back">
+      <div class="service-media img-frame"><img src="assets/cond-lower-back.jpg" alt="A person lifting a cardboard box from the floor" loading="lazy" width="900" height="675"></div>
+      <div class="service-body">
+        <p class="eyebrow">01 &middot; Most common</p>
+        <h3>Lower back pain</h3>
+        <div class="prose">
+          <p>About four in ten people who book with us come in for this. Usually it is mechanical &mdash; a joint that is not moving well, muscle guarding around it, and a habit that keeps reloading it. Sometimes it started with a lift; more often it started with nothing in particular.</p>
+          <p><strong>What we assess:</strong> lumbar and hip range, single-leg control, straight-leg raise, and the neurological screen. We are specifically ruling out the small number of causes that need someone other than us.</p>
+          <p><strong>What we do:</strong> spinal manipulation or mobilisation depending on how irritable you are, soft-tissue work through the surrounding muscle, and two exercises you actually have time to do.</p>
+        </div>
+        <div class="service-facts">
+          <span class="chip">Median 4 visits</span><span class="chip chip--accent">$89 first visit</span><span class="chip chip--sage">Same-day treatment usual</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="service-block" id="neck">
+      <div class="service-media img-frame"><img src="assets/cond-neck.jpg" alt="A person working at a laptop beside a window" loading="lazy" width="900" height="675"></div>
+      <div class="service-body">
+        <p class="eyebrow">02</p>
+        <h3>Neck pain &amp; desk strain</h3>
+        <div class="prose">
+          <p>Stiffness on one side, a restricted turn when reversing the car, an ache that builds through the afternoon. Almost always the mid-back is part of it, which is why treating only the neck tends not to hold.</p>
+          <p><strong>What we assess:</strong> cervical range in all six directions, thoracic mobility, shoulder-blade control, and how your workstation is actually set up on a normal working day.</p>
+          <p><strong>What we do:</strong> cervical and thoracic mobilisation, targeted soft-tissue work, and a short set of movement breaks tied to something you already do hourly.</p>
+        </div>
+        <div class="service-facts">
+          <span class="chip">Median 4&ndash;5 visits</span><span class="chip chip--accent">Desk assessment included</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="service-block" id="sciatica">
+      <div class="service-media img-frame"><img src="assets/cond-sciatica.jpg" alt="A seated person holding their lower leg with both hands, just below the knee" loading="lazy" width="900" height="675"></div>
+      <div class="service-body">
+        <p class="eyebrow">03</p>
+        <h3>Sciatica &amp; nerve pain</h3>
+        <div class="prose">
+          <p>Pain, pins and needles or weakness travelling below the knee. This is the one where the assessment matters most, because &ldquo;sciatica&rdquo; describes a symptom, not a cause, and the causes are treated differently.</p>
+          <p><strong>What we assess:</strong> a full neurological screen &mdash; reflexes, myotomes, dermatomes &mdash; plus nerve tension testing and directional preference. We will refer you for imaging if the findings warrant it, and we will tell you why.</p>
+          <p><strong>What we do:</strong> nerve mobilisation, directional loading, and joint work above and below the involved level. Progress is measured by where the pain stops travelling to, not by how it feels on the day.</p>
+        </div>
+        <div class="service-facts">
+          <span class="chip">Median 6&ndash;8 visits</span><span class="chip chip--accent">Neurological screen included</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="service-block" id="headaches">
+      <div class="service-media img-frame"><img src="assets/cond-headache.jpg" alt="A close view of a person pressing their fingertips against their brow and temples, eyes closed" loading="lazy" width="900" height="675"></div>
+      <div class="service-body">
+        <p class="eyebrow">04</p>
+        <h3>Tension headaches</h3>
+        <div class="prose">
+          <p>Headaches that start at the base of the skull and wrap forward, often one-sided, often worse late in the day. When they are coming from the upper neck, they respond well. When they are not, we say so.</p>
+          <p><strong>What we assess:</strong> upper cervical joint mobility, the flexion-rotation test, jaw and breathing pattern, and a two-week headache diary if you can keep one.</p>
+          <p><strong>What we do:</strong> upper cervical mobilisation, sub-occipital release, and deep neck flexor retraining. We track headache-days per month. It is a blunter number than a pain score and it is the one patients actually notice.</p>
+        </div>
+        <div class="service-facts">
+          <span class="chip">Median 5 visits</span><span class="chip chip--sage">Tracked in headache-days</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="service-block" id="sports">
+      <div class="service-media img-frame"><img src="assets/cond-sports.jpg" alt="A runner retying a shoelace on a park path" loading="lazy" width="900" height="675">
+      </div>
+      <div class="service-body">
+        <p class="eyebrow">05</p>
+        <h3>Sports &amp; running injuries</h3>
+        <div class="prose">
+          <p>Achilles, ITB, shin pain, hamstring niggles, shoulder pain in overhead sport. The injury is usually the last link in a chain that starts with a training-load change you did not think counted.</p>
+          <p><strong>What we assess:</strong> the injured tissue, the joint above and below, and your last six weeks of training volume. Dr Okonkwo runs this caseload and works with two local running clubs.</p>
+          <p><strong>What we do:</strong> soft-tissue work including Graston where it helps, joint mobilisation, and a loading programme that keeps you training rather than resting completely.</p>
+        </div>
+        <div class="service-facts">
+          <span class="chip">Median 3&ndash;6 visits</span><span class="chip chip--accent">Training-load review</span><span class="chip chip--sage">Dr Okonkwo</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="service-block" id="posture">
+      <div class="service-media img-frame"><img src="assets/cond-posture.jpg" alt="A person carrying a young child on one hip" loading="lazy" width="900" height="675"></div>
+      <div class="service-body">
+        <p class="eyebrow">06</p>
+        <h3>Posture &amp; everyday strain</h3>
+        <div class="prose">
+          <p>Carrying a child on one hip, a bag on one shoulder, long drives, the first year of parenthood. Not an injury so much as an accumulation &mdash; which means the fix is partly treatment and partly logistics.</p>
+          <p><strong>What we assess:</strong> loaded and unloaded posture, hip and thoracic mobility, and the specific daily task that keeps aggravating it.</p>
+          <p><strong>What we do:</strong> mobilisation through the stiff segments, strengthening for what is working too hard, and honest advice about the carrying habit. Pregnancy and postnatal care sits here too, with Dr Reyes.</p>
+        </div>
+        <div class="service-facts">
+          <span class="chip">Median 3&ndash;5 visits</span><span class="chip chip--sage">Pregnancy &amp; postnatal &middot; Dr Reyes</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 · first visit steps — dark anchor (middle band) -->
+<section class="section section--dark">
+  <div class="container">
+    <div class="section-head section-head--wide">
+      <p class="eyebrow">However you arrived here</p>
+      <h2>Every first visit runs the same way.</h2>
+      <p class="lede">Whichever of the six brought you in, the first appointment is forty-five minutes and follows the same four steps.</p>
+    </div>
+    <div class="grid-4 stagger">
+      <div class="step reveal"><span class="n">01</span><h3>Talk it through</h3><p>What hurts, when it started, what makes it worse, and what you need to get back to.</p><span class="mins">about 15 min</span></div>
+      <div class="step reveal"><span class="n">02</span><h3>Physical assessment</h3><p>Movement and range testing, plus orthopaedic and neurological tests.</p><span class="mins">about 15 min</span></div>
+      <div class="step reveal"><span class="n">03</span><h3>See what we found</h3><p>We show you the assessment on screen and explain it in plain English.</p><span class="mins">about 10 min</span></div>
+      <div class="step reveal"><span class="n">04</span><h3>A plan, with a number</h3><p>Expected visits, total cost, and what you do at home. In writing.</p><span class="mins">about 5 min</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 · price + insurance — light -->
+<section class="section section--light">
+  <div class="container">
+    <div class="section-head section-head--signed">
+      <p class="eyebrow">What it costs</p>
+      <h2>One price for the first visit, whichever complaint you bring.</h2>
+    </div>
+    <div class="split--price">
+      <div class="price-card reveal">
+        <div class="amount">$89<span> first visit</span></div>
+        <p class="cap">Follow-ups are $52. The visit count in your written plan is the number we hold ourselves to &mdash; we review it at visit three and change the plan or refer you on if it is not tracking.</p>
+        <a class="btn btn-primary" href="contact.html#book">Book your first visit</a>
+      </div>
+      <div>
+        <ul class="incl stagger">
+          <li class="reveal"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>A 15-minute consultation about your history, not a two-minute intake form</span></li>
+          <li class="reveal"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Full physical assessment with orthopaedic and neurological testing</span></li>
+          <li class="reveal"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>A written plan with an expected visit count and a total cost</span></li>
+          <li class="reveal"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Your first treatment the same day, if the assessment supports it</span></li>
+          <li class="reveal"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>A referral onward if chiropractic is not the right answer for you</span></li>
+        </ul>
+        <div class="carriers">
+          <p class="eyebrow" style="margin-bottom:0">Insurance we bill directly</p>
+          <div class="carrier-row">
+            <span class="carrier">Aetna</span><span class="carrier">BlueCross BlueShield</span><span class="carrier">Cigna</span>
+            <span class="carrier">UnitedHealthcare</span><span class="carrier">Humana</span><span class="carrier">Medicare</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 · FAQ — warm -->
+<section class="section section--warm">
+  <div class="container">
+    <div class="faq">
+      <div class="section-head section-head--center">
+        <p class="eyebrow eyebrow--center">Before you book</p>
+        <h2>Questions about treatment.</h2>
+      </div>
+      <div class="faq-item" data-open="true">
+        <button class="faq-trigger" aria-expanded="true">Which technique will you use on me?<span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-panel"><div><p>It depends on how irritable the area is on the day. If you are acute or anxious we start with low-force options &mdash; the Activator instrument, mobilisation, soft-tissue work &mdash; and only move to manipulation if and when it is appropriate. You will be told what is about to happen before it happens, every time.</p></div></div>
+      </div>
+      <div class="faq-item" data-open="false">
+        <button class="faq-trigger" aria-expanded="false">Will I need X-rays?<span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-panel"><div><p>Probably not. Routine imaging for uncomplicated back pain does not improve outcomes and is not recommended by current guidelines. We refer for imaging when the history or the neurological screen gives us a specific reason, and we will explain what that reason is.</p></div></div>
+      </div>
+      <div class="faq-item" data-open="false">
+        <button class="faq-trigger" aria-expanded="false">Do I have to keep coming forever?<span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-panel"><div><p>No. Every plan has a discharge point written into it on day one. Some patients choose to come back periodically once they are better; that is a choice, not a requirement, and we will never book it for you automatically.</p></div></div>
+      </div>
+      <div class="faq-item" data-open="false">
+        <button class="faq-trigger" aria-expanded="false">Can I combine this with physiotherapy?<span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-panel"><div><p>Yes, and often it is the better answer. Tell us who you are seeing and we will write to them. For several presentations we will suggest it ourselves rather than trying to cover everything in-house.</p></div></div>
+      </div>
+      <div class="faq-item" data-open="false">
+        <button class="faq-trigger" aria-expanded="false">What if it gets worse after a session?<span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-panel"><div><p>Mild soreness for a day afterwards is common, particularly after the first session. Anything beyond that, call us &mdash; the number goes to the clinic, not a call centre, and we would much rather hear about it than have you wait for the next appointment.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 · closing CTA — dark, photo -->
+<section class="section section--dark closing-cta">
+  <div class="closing-bg" aria-hidden="true"><img src="assets/closing-walk.jpg" alt="" loading="lazy" width="1440" height="1056"></div>
+  <div class="container">
+    <h2 class="lines-2">Not sure which of the six is yours?</h2>
+    <p class="lines-2">That is what the assessment is for. Book the first visit and we will tell you &mdash; including if the answer is that you need someone other than us.</p>
+    <div class="cta-row cta-row--center">
+      <a class="btn btn-primary" href="contact.html#book">Book an appointment</a>
+      <a class="btn btn-phone" href="tel:+15550128840">(555) 012-8840</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="foot-split">
+    <div class="foot-map" aria-label="Map showing the three ChiroPro clinic locations">
+      <svg viewBox="0 0 600 460" role="img" aria-label="Stylised map of Riverside, Northgate and Harbourside">
+        <rect width="600" height="460" fill="var(--ds-primary-soft)"/>
+        <path d="M0 300 Q140 268 250 300 T600 286 L600 460 L0 460Z" fill="var(--ds-signature)" opacity=".42"/>
+        <g stroke="var(--ds-bg)" stroke-width="9" fill="none" stroke-linecap="round">
+          <path d="M-10 120 H610"/><path d="M-10 236 H610"/><path d="M-10 356 H610"/>
+          <path d="M120 -10 V470"/><path d="M300 -10 V470"/><path d="M470 -10 V470"/>
+        </g>
+        <g stroke="var(--ds-bg)" stroke-width="4" fill="none" opacity=".7">
+          <path d="M-10 178 H610"/><path d="M-10 296 H610"/><path d="M205 -10 V470"/><path d="M385 -10 V470"/>
+        </g>
+        <path d="M-10 402 Q160 372 300 400 T610 384" stroke="var(--ds-primary)" stroke-width="14" fill="none" opacity=".35"/>
+        <g fill="var(--ds-primary)"><circle cx="120" cy="178" r="16"/><circle cx="300" cy="120" r="16"/><circle cx="470" cy="296" r="16"/></g>
+        <g fill="var(--ds-accent)"><circle cx="120" cy="178" r="6"/><circle cx="300" cy="120" r="6"/><circle cx="470" cy="296" r="6"/></g>
+        <g font-family="JetBrains Mono, monospace" font-size="12" fill="var(--ds-ink)" letter-spacing="1">
+          <text x="120" y="212" text-anchor="middle">RIVERSIDE</text>
+          <text x="300" y="154" text-anchor="middle">NORTHGATE</text>
+          <text x="470" y="330" text-anchor="middle">HARBOURSIDE</text>
+        </g>
+      </svg>
+    </div>
+    <div class="foot-info">
+      <p class="eyebrow">Visit us</p>
+      <div class="foot-locs">
+        <div class="foot-loc"><h3>Riverside</h3><address>118 Mill Row, Riverside, CA 92501</address><span class="hrs">Mon&ndash;Thu 7:30&ndash;19:00 &middot; Fri 7:30&ndash;17:00 &middot; Sat 8:00&ndash;13:00</span></div>
+        <div class="foot-loc"><h3>Northgate</h3><address>4 Aldergate Square, Northgate, CA 92503</address><span class="hrs">Mon&ndash;Thu 8:00&ndash;20:00 &middot; Fri 8:00&ndash;16:00 &middot; Sat 9:00&ndash;14:00</span></div>
+        <div class="foot-loc"><h3>Harbourside</h3><address>27 Quay Lane, Harbourside, CA 92507</address><span class="hrs">Mon&ndash;Thu 7:00&ndash;18:30 &middot; Fri 7:00&ndash;15:00 &middot; Sat 8:00&ndash;13:00</span></div>
+      </div>
+      <div class="cta-row" style="margin-top:var(--ds-space-xl)">
+        <a class="btn btn-primary" href="contact.html#book">Book an appointment</a>
+        <a class="btn btn-phone" href="tel:+15550128840">(555) 012-8840</a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div class="container">
+      <div class="foot-brand">
+        <svg class="brand-mark" viewBox="0 0 30 34" fill="none" aria-hidden="true">
+          <path d="M15 2c4 0 6 2.2 6 4.4s-2.4 3-6 3-6-.8-6-3S11 2 15 2Z" fill="var(--ds-primary)"/>
+          <path d="M15 11c4.4 0 6.6 2.2 6.6 4.3s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 11 15 11Z" fill="var(--ds-primary)" opacity=".82"/>
+          <path d="M15 20c4.4 0 6.6 2.1 6.6 4.2s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 20 15 20Z" fill="var(--ds-primary)" opacity=".62"/>
+          <path d="M15 28.6c3 0 4.6 1.4 4.6 2.6S17.6 33 15 33s-4.6-.6-4.6-1.8 1.6-2.6 4.6-2.6Z" fill="var(--ds-accent)"/>
+        </svg>
+        <span class="brand-word">Chiro<em>Pro</em></span>
+      </div>
+      <ul class="foot-nav">
+        <li><a class="link-sweep" href="services.html">Services</a></li>
+        <li><a class="link-sweep" href="about.html">About us</a></li>
+        <li><a class="link-sweep" href="locations.html">Locations</a></li>
+        <li><a class="link-sweep" href="contact.html">Contact</a></li>
+      </ul>
+      <div class="foot-legal">
+        <span>&#9733; 4.9 &middot; 1,284 reviews</span>
+        <span>All practitioners licensed Doctors of Chiropractic</span>
+        <span>Privacy &middot; Accessibility &middot; Notice of Privacy Practices</span>
+        <span>&copy; 2026 ChiroPro</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <a class="btn btn-primary" href="contact.html#book">Book an appointment</a>
+  <a class="btn btn-phone" href="tel:+15550128840" aria-label="Call the clinic">Call</a>
+</div>
+
+<script src="design-system/site.js"></script>
+</body>
+</html>
