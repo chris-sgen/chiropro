@@ -68,9 +68,22 @@ python -m http.server 8000
 # then open http://localhost:8000/
 ```
 
-`404.html` is the one exception — it uses root-relative `/chiropro/…` paths so it
-survives being served for a deep missing URL, which means it only renders
-correctly on the deployed site, not from disk.
+`404.html` is the one exception. GitHub Pages serves it for any missing URL under
+the project, including deep ones like `/chiropro/a/b/typo`, where a plain
+relative href would resolve against `/chiropro/a/b/` and 404 the stylesheet too.
+It therefore declares `<base href="/chiropro/">` and keeps every href relative —
+which means it needs an origin where `/chiropro/` resolves, and will not render
+from `file://`. To view or capture it locally, serve the **parent** directory:
+
+```sh
+cd ..            # Code/web-mockup
+python -m http.server 8000
+# then open http://localhost:8000/chiropro/404.html
+```
+
+`node design-system/capture-404.mjs` does exactly this automatically, and asserts
+at each breakpoint that the CSS applied and the links resolved before writing
+`assets/chiropro-404-{1440,1024,768,375}.png`.
 
 ## Notes
 
@@ -89,4 +102,5 @@ correctly on the deployed site, not from disk.
    against that host.
 3. Remove the `noindex, nofollow` meta from the five site pages (leave it on
    `404.html` and on the three design-reference pages).
-4. Re-point the root-relative paths in `404.html` from `/chiropro/` to `/`.
+4. Change `<base href="/chiropro/">` in `404.html` to `href="/"` (one line — every
+   other href on that page is relative and follows the base).
