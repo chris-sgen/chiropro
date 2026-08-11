@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page not found | ChiroPro</title>
+<meta name="description" content="That page does not exist. Here is the way back to booking, services and the three clinics.">
+<meta name="robots" content="noindex, nofollow">
+
+<!-- NOTE: every path on this page is ROOT-RELATIVE (/chiropro/...), unlike the
+     rest of the site which uses relative paths. GitHub Pages serves this file for
+     ANY missing URL under the project, including deep ones like
+     /chiropro/a/b/typo — a relative href would resolve against /chiropro/a/b/ and
+     404 the stylesheet too, leaving an unstyled page. The trade-off is that this
+     one file does not render correctly when opened straight from disk over
+     file://; view it on the deployed URL instead.
+
+     It carries no page-level CSS and no classes outside the canonical
+     vocabulary: it reuses .page-hero exactly as every other inner page does, so
+     it inherits the design system rather than describing a second version of it. -->
+<link rel="icon" href="/chiropro/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/chiropro/apple-touch-icon.png">
+<meta name="theme-color" content="#24384B">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/chiropro/design-system/tokens.css">
+<link rel="stylesheet" href="/chiropro/design-system/structural.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container site-nav">
+    <a class="brand" href="/chiropro/" aria-label="ChiroPro home">
+      <svg class="brand-mark" viewBox="0 0 30 34" fill="none" aria-hidden="true">
+        <path d="M15 2c4 0 6 2.2 6 4.4s-2.4 3-6 3-6-.8-6-3S11 2 15 2Z" fill="var(--ds-primary)"/>
+        <path d="M15 11c4.4 0 6.6 2.2 6.6 4.3s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 11 15 11Z" fill="var(--ds-primary)" opacity=".82"/>
+        <path d="M15 20c4.4 0 6.6 2.1 6.6 4.2s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 20 15 20Z" fill="var(--ds-primary)" opacity=".62"/>
+        <path d="M15 28.6c3 0 4.6 1.4 4.6 2.6S17.6 33 15 33s-4.6-.6-4.6-1.8 1.6-2.6 4.6-2.6Z" fill="var(--ds-accent)"/>
+      </svg>
+      <span class="brand-word">Chiro<em>Pro</em></span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a href="/chiropro/">Home</a></li>
+        <li><a href="/chiropro/services.html">Services</a></li>
+        <li><a href="/chiropro/about.html">About us</a></li>
+        <li><a href="/chiropro/locations.html">Locations</a></li>
+        <li><a href="/chiropro/contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-phone" href="tel:+15550128840">(555) 012-8840</a>
+      <a class="btn btn-primary" href="/chiropro/contact.html#book">Book an appointment</a>
+      <button class="hamburger" data-hamburger aria-expanded="false" aria-controls="drawer" aria-label="Open menu"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="drawer-backdrop" data-drawer-backdrop></div>
+<nav class="mobile-drawer" id="drawer" data-drawer aria-hidden="true" aria-label="Mobile">
+  <button class="drawer-close" data-drawer-close aria-label="Close menu">&#10005;</button>
+  <ul class="drawer-links">
+    <li><a href="/chiropro/">Home</a></li>
+    <li><a href="/chiropro/services.html">Services</a></li>
+    <li><a href="/chiropro/about.html">About us</a></li>
+    <li><a href="/chiropro/locations.html">Locations</a></li>
+    <li><a href="/chiropro/contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<main id="main">
+
+<!-- 01 · page hero — dark, no photograph. A 404 is an interruption: it should
+     paint instantly and point somewhere, not load a hero image first. -->
+<section class="section page-hero section--dark">
+  <div class="container">
+    <p class="crumbs"><a class="link-sweep" href="/chiropro/">Home</a> &nbsp;/&nbsp; Error 404</p>
+    <h1>That page has moved, or never existed.</h1>
+    <p class="lede">No harm done. If you were part-way through booking an appointment, the fastest way back is the button below &mdash; it takes about ninety seconds, and there is no card up front and no referral needed.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/chiropro/contact.html#book">Book an appointment</a>
+      <a class="btn btn-phone" href="tel:+15550128840">(555) 012-8840</a>
+    </div>
+  </div>
+</section>
+
+<!-- 02 · where to go instead — light -->
+<section class="section section--light">
+  <div class="container">
+    <div class="section-head section-head--signed">
+      <p class="eyebrow">Try one of these</p>
+      <h2>The five pages of the site.</h2>
+      <p class="lede">If you followed a link here from somewhere else, it was probably pointing at one of these.</p>
+    </div>
+    <ul class="foot-nav">
+      <li><a class="link-sweep" href="/chiropro/">Home</a></li>
+      <li><a class="link-sweep" href="/chiropro/services.html">What we treat</a></li>
+      <li><a class="link-sweep" href="/chiropro/locations.html">Three clinics</a></li>
+      <li><a class="link-sweep" href="/chiropro/about.html">About us</a></li>
+      <li><a class="link-sweep" href="/chiropro/contact.html">Contact</a></li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="foot-bottom">
+    <div class="container">
+      <div class="foot-brand">
+        <svg class="brand-mark" viewBox="0 0 30 34" fill="none" aria-hidden="true">
+          <path d="M15 2c4 0 6 2.2 6 4.4s-2.4 3-6 3-6-.8-6-3S11 2 15 2Z" fill="var(--ds-primary)"/>
+          <path d="M15 11c4.4 0 6.6 2.2 6.6 4.3s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 11 15 11Z" fill="var(--ds-primary)" opacity=".82"/>
+          <path d="M15 20c4.4 0 6.6 2.1 6.6 4.2s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 20 15 20Z" fill="var(--ds-primary)" opacity=".62"/>
+          <path d="M15 28.6c3 0 4.6 1.4 4.6 2.6S17.6 33 15 33s-4.6-.6-4.6-1.8 1.6-2.6 4.6-2.6Z" fill="var(--ds-accent)"/>
+        </svg>
+        <span class="brand-word">Chiro<em>Pro</em></span>
+      </div>
+      <ul class="foot-nav">
+        <li><a class="link-sweep" href="/chiropro/services.html">Services</a></li>
+        <li><a class="link-sweep" href="/chiropro/about.html">About us</a></li>
+        <li><a class="link-sweep" href="/chiropro/locations.html">Locations</a></li>
+        <li><a class="link-sweep" href="/chiropro/contact.html">Contact</a></li>
+      </ul>
+      <div class="foot-legal">
+        <span>&#9733; 4.9 &middot; 1,284 reviews</span>
+        <span>All practitioners licensed Doctors of Chiropractic</span>
+        <span>Privacy &middot; Accessibility &middot; Notice of Privacy Practices</span>
+        <span>&copy; 2026 ChiroPro</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <a class="btn btn-primary" href="/chiropro/contact.html#book">Book an appointment</a>
+  <a class="btn btn-phone" href="tel:+15550128840" aria-label="Call the clinic">Call</a>
+</div>
+
+<script src="/chiropro/design-system/site.js"></script>
+</body>
+</html>

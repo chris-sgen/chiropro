@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Real XML sitemap for the deployed preview. (sitemap.yaml, alongside this file,
+  is the BUILD PLAN for the site — a different artefact with a different job;
+  it is not a substitute for this and search engines cannot read it.)
+
+  Note that robots.txt currently disallows everything: this is a review preview
+  of a fictional practice and must not be indexed. This file exists so the
+  handover to a real host is a hostname change rather than new work — at launch,
+  swap the host below, refresh <lastmod>, and relax robots.txt.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://chris-sgen.github.io/chiropro/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://chris-sgen.github.io/chiropro/services.html</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://chris-sgen.github.io/chiropro/locations.html</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://chris-sgen.github.io/chiropro/about.html</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://chris-sgen.github.io/chiropro/contact.html</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+</urlset>

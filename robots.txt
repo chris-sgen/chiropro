@@ -8,3 +8,5 @@
 
 User-agent: *
 Disallow: /
+
+Sitemap: https://chris-sgen.github.io/chiropro/sitemap.xml

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="ChiroPro">
+  <!-- ChiroPro mark: the four-vertebra spine from .brand-mark in the site header,
+       set on a --ds-primary-deep tile. The header draws the spine in --ds-primary
+       on cream; at 16px that pairing greys out, so the tab icon inverts it to
+       cream-on-navy and keeps the champagne base vertebra. Colours are the
+       design-system tokens, hard-coded because an SVG favicon is loaded outside
+       the page and cannot resolve var(--ds-*). -->
+  <rect width="32" height="32" rx="7" fill="#24384B"/>
+  <g transform="translate(16 16) scale(0.71) translate(-15 -17.5)">
+    <path d="M15 2c4 0 6 2.2 6 4.4s-2.4 3-6 3-6-.8-6-3S11 2 15 2Z" fill="#FBF7F1"/>
+    <path d="M15 11c4.4 0 6.6 2.2 6.6 4.3s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 11 15 11Z" fill="#FBF7F1" opacity=".86"/>
+    <path d="M15 20c4.4 0 6.6 2.1 6.6 4.2s-2.6 3-6.6 3-6.6-.9-6.6-3S10.6 20 15 20Z" fill="#FBF7F1" opacity=".7"/>
+    <path d="M15 28.6c3 0 4.6 1.4 4.6 2.6S17.6 33 15 33s-4.6-.6-4.6-1.8 1.6-2.6 4.6-2.6Z" fill="#C2A878"/>
+  </g>
+</svg>
